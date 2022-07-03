@@ -60,7 +60,7 @@
         "resizable": true,
         "title": "sidebar",
         "width": 800,
-        "decorations": false,
+        "decorations": true,
         "minWidth": 50,
         "minHeight": 800
       }

@@ -3,6 +3,7 @@
     <v-banner-text>
       {{ message.UnitId + ' ' + message.UnitClass }}
     </v-banner-text>
+
     <v-banner-actions>
       <v-btn>Ack</v-btn>
     </v-banner-actions>
