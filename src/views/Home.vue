@@ -5,15 +5,18 @@
       :height="WindowHeight"
       :screen_width="screenWidth"
       :screen_height="screenHeight"
+      :bar_ratio="sideBarScreenRatio"
+      :messages="testMessgaes"
       v-if="!smallSideBarOpen"
     />
-    <small-side-bar v-if="smallSideBarOpen" />
+    <small-side-bar :bar_ratio="sideBarScreenRatio" v-if="smallSideBarOpen" />
   </v-app>
 </template>
 
 <script lang="ts">
 import SideBar from '../components/SideBar.vue';
 import SmallSideBar from '../components/SmallSideBar.vue';
+import { TestMessages, Message } from '../data/test';
 
 export default {
   components: {
@@ -25,14 +28,18 @@ export default {
     screenWidth: number;
     screenHeight: number;
     windowWidth: number;
-    WindowHeight: number;
+    windowHeight: number;
+    sideBarScreenRatio: number;
+    testMessgaes: Message[];
   } {
     return {
       smallSideBarOpen: false,
       screenWidth: screen.availWidth,
       screenHeight: screen.availHeight,
       windowWidth: window.innerWidth,
-      WindowHeight: window.innerHeight,
+      windowHeight: window.innerHeight,
+      sideBarScreenRatio: screen.availWidth / window.innerWidth,
+      testMessgaes: TestMessages,
     };
   },
   created() {
@@ -44,8 +51,9 @@ export default {
   methods: {
     onResize() {
       this.windowWidth = window.innerWidth;
-      this.WindowHeight = window.innerHeight;
-      if (this.screenWidth / this.windowWidth > 39) {
+      this.windowHeight = window.innerHeight;
+      this.sideBarScreenRatio = this.screenWidth / this.windowWidth;
+      if (this.sideBarScreenRatio > 40) {
         this.smallSideBarOpen = true;
       } else {
         this.smallSideBarOpen = false;

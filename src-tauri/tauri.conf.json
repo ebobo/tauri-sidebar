@@ -56,10 +56,13 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 800,
         "resizable": true,
         "title": "sidebar",
-        "width": 800
+        "width": 800,
+        "decorations": false,
+        "minWidth": 50,
+        "minHeight": 800
       }
     ]
   }
