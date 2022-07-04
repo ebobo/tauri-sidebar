@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import MessageCard from './MessageCard.vue';
-import { Message } from '@/data/test';
+import { Message } from '../data/test';
 export default {
   components: {
     MessageCard,

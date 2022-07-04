@@ -2,7 +2,6 @@
   <v-card>
     <v-toolbar flat>
       <v-toolbar-title>AM4</v-toolbar-title>
-      <v-label>{{ bar_ratio.toFixed(2) }}</v-label>
     </v-toolbar>
     <v-btn height="50">
       <v-icon>mdi-home-floor-a</v-icon>
@@ -17,10 +16,21 @@
       <v-icon>mdi-altimeter</v-icon>
     </v-btn>
   </v-card>
+  <screen-info-widget
+    :bar_ratio="bar_ratio"
+    :screen_width="screen_width"
+    :screen_height="screen_height"
+    :width="width"
+    :height="height"
+  />
 </template>
 
 <script lang="ts">
+import ScreenInfoWidget from './ScreenInfoWidget.vue';
 export default {
+  components: {
+    ScreenInfoWidget,
+  },
   props: {
     bar_ratio: {
       required: true,

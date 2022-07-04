@@ -2,11 +2,12 @@
   <v-app>
     <side-bar
       :width="windowWidth"
-      :height="WindowHeight"
+      :height="windowHeight"
       :screen_width="screenWidth"
       :screen_height="screenHeight"
       :bar_ratio="sideBarScreenRatio"
       :messages="testMessgaes"
+      @fold="switchBars"
       v-if="!smallSideBarOpen"
     />
     <small-side-bar :bar_ratio="sideBarScreenRatio" v-if="smallSideBarOpen" />
@@ -58,6 +59,10 @@ export default {
       } else {
         this.smallSideBarOpen = false;
       }
+    },
+
+    switchBars() {
+      this.smallSideBarOpen = !this.smallSideBarOpen;
     },
   },
 };
