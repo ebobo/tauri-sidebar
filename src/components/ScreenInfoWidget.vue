@@ -1,23 +1,36 @@
 <template>
-  <v-card flat>
-    <v-row>
-      <v-col xs="12">
-        <v-label>{{ barRatio }}</v-label>
+  <v-toolbar color="primary">
+    <v-row align="center">
+      <v-col cols="1">
+        <v-row justify="center"> <v-icon>mdi-monitor-screenshot</v-icon></v-row>
       </v-col>
-      <v-col xs="12">
-        <v-label>{{ appWidth }}</v-label></v-col
-      >
-      <v-col xs="12">
-        <v-label>{{ appHeight }}</v-label></v-col
-      >
-      <v-col xs="12">
-        <v-label>{{ screenWidth }}</v-label></v-col
-      >
-      <v-col xs="12">
-        <v-label>{{ screenHeight }}</v-label></v-col
-      >
+      <v-col>
+        <v-row justify="center">
+          <p class="ml-1 text-subtitle-2">{{ barRatio }}</p></v-row
+        >
+      </v-col>
+      <v-col>
+        <v-row justify="center">
+          <p class="ml-1 text-subtitle-2">{{ screenWidth }}</p>
+        </v-row>
+      </v-col>
+      <v-col>
+        <v-row justify="center">
+          <p class="ml-1 text-subtitle-2">{{ screenHeight }}</p>
+        </v-row>
+      </v-col>
+      <v-col>
+        <v-row justify="center">
+          <p class="ml-1 text-subtitle-2">{{ appWidth }}</p>
+        </v-row>
+      </v-col>
+      <v-col>
+        <v-row justify="center">
+          <p class="ml-1 text-subtitle-2">{{ appHeight }}</p>
+        </v-row>
+      </v-col>
     </v-row>
-  </v-card>
+  </v-toolbar>
 </template>
 
 <script lang="ts">

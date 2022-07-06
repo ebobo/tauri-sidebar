@@ -4,7 +4,6 @@
     <buttons-widget />
     <message-card-list height="60vh" :messages="messages" />
 
-    <info-widget />
     <screen-info-widget
       :bar_ratio="bar_ratio"
       :screen_width="screen_width"
