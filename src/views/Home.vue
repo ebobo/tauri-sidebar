@@ -1,6 +1,7 @@
 <template>
-  <v-app>
+  <v-app class="app-area">
     <side-bar
+      class="fill-height"
       :width="windowWidth"
       :height="windowHeight"
       :screen_width="screenWidth"
@@ -67,3 +68,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.app-area {
+  background-color: #0f9b0f;
+}
+</style>

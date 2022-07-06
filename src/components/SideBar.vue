@@ -12,6 +12,8 @@
       :width="width"
       :height="height"
     />
+
+    <bottom-info class="bottom-widget" />
   </v-card>
 </template>
 
@@ -23,6 +25,7 @@ import InfoWidget from './InfoWidget.vue';
 import TopWidget from './TopWidget.vue';
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import ButtonsWidget from './ButtonsWidget.vue';
+import BottomInfo from './BottomInfo.vue';
 
 export default {
   components: {
@@ -32,6 +35,7 @@ export default {
     TopWidget,
     ScreenInfoWidget,
     ButtonsWidget,
+    BottomInfo,
   },
   props: {
     width: {
@@ -83,3 +87,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.bar-area {
+  background-color: #0f409b;
+}
+
+.bottom-widget {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+</style>
