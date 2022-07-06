@@ -2,7 +2,8 @@
   <v-card :theme="theme">
     <top-widget @change-theme="changeTheme" @change-size="$emit('fold')" />
     <buttons-widget />
-    <message-card-list height="300px" :messages="messages" />
+    <message-card-list height="60vh" :messages="messages" />
+
     <info-widget />
     <screen-info-widget
       :bar_ratio="bar_ratio"
@@ -16,6 +17,7 @@
 
 <script lang="ts">
 import MessageCardList from './MessageCardList.vue';
+import MessageBannerList from './MessageBannerList.vue';
 import { Message } from '../data/test';
 import InfoWidget from './InfoWidget.vue';
 import TopWidget from './TopWidget.vue';
@@ -25,6 +27,7 @@ import ButtonsWidget from './ButtonsWidget.vue';
 export default {
   components: {
     MessageCardList,
+    MessageBannerList,
     InfoWidget,
     TopWidget,
     ScreenInfoWidget,

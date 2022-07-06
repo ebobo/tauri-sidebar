@@ -10,9 +10,9 @@
     />
     <v-spacer></v-spacer>
     <v-label></v-label>
-    <!-- <v-btn icon @click="changeSize">
+    <v-btn icon @click="changeSize">
       <v-icon>mdi-resize</v-icon>
-    </v-btn> -->
+    </v-btn>
     <v-btn icon @click="changeTheme">
       <v-icon>mdi-brightness-4</v-icon>
     </v-btn>

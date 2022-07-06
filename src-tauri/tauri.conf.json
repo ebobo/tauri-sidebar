@@ -56,10 +56,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 800,
+        "height": 1080,
         "resizable": true,
         "title": "sidebar",
-        "width": 800,
+        "width": 400,
         "decorations": true,
         "minWidth": 50,
         "minHeight": 800

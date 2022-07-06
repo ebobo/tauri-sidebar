@@ -1,19 +1,19 @@
 <template>
-  <v-list class="card-list">
-    <message-card
+  <v-list>
+    <message-banner
       v-for="m in messages"
       :key="m.UnitId"
       :message="m"
-    ></message-card>
+    ></message-banner>
   </v-list>
 </template>
 
 <script lang="ts">
-import MessageCard from './MessageCard.vue';
+import MessageBanner from './MessageBanner.vue';
 import { Message } from '../data/test';
 export default {
   components: {
-    MessageCard,
+    MessageBanner,
   },
   props: {
     messages: {
@@ -24,11 +24,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.card-list {
-  /* overflow: hidden !important; */
-  /* scrollbar-width: none; */
-  /* -ms-overflow-style: none; */
-}
-</style>
