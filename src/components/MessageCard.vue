@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container :style="borderStyles">
     <v-row>
       <v-col cols="2" xs="4" class="icon-area fill-height" align-self="center">
         <v-icon :color="cardParameters.mainColor" size="x-large">
@@ -46,7 +46,7 @@
     </v-row>
   </v-container>
   <v-divider inset :color="cardParameters.dividerColor"></v-divider>
-  <v-divider inset :color="cardParameters.dividerColor"></v-divider>
+  <!-- <v-divider inset :color="cardParameters.dividerColor"></v-divider> -->
 </template>
 
 <script lang="ts">
@@ -78,6 +78,43 @@ export default {
     },
   },
   computed: {
+    borderStyles() {
+      let color = '#757575';
+      switch (this.message.Type) {
+        case State.SilentAlarm: {
+          color = '#D32F2F';
+          break;
+        }
+        case State.PreAlarm: {
+          color = '#D32F2F';
+          break;
+        }
+        case State.Alarm: {
+          color = '#D32F2F';
+          break;
+        }
+        case State.AlarmAck: {
+          break;
+        }
+        case State.Fault: {
+          color = '#F9A825';
+          break;
+        }
+        case State.FaultAck: {
+          break;
+        }
+        case State.EarlyWarning: {
+          color = '#F9A825';
+          break;
+        }
+        default:
+          break;
+      }
+      return {
+        'border-right': `4px solid ${color}`,
+      };
+    },
+
     cardParameters(): parameters {
       let para = {
         mainIcon: 'mdi-help-circle-outline',
@@ -90,20 +127,20 @@ export default {
         case State.SilentAlarm: {
           para.mainIcon = 'mdi-alert-octagram-outline';
           para.mainColor = 'red-darken-2';
-          para.dividerColor = 'red-darken-2';
+          // para.dividerColor = 'red-darken-2';
           break;
         }
         case State.PreAlarm: {
           para.mainIcon = 'mdi-alert-octagram-outline';
           para.mainColor = 'red-darken-2';
-          para.dividerColor = 'red-darken-2';
+          // para.dividerColor = 'red-darken-2';
           break;
         }
         case State.Alarm: {
           para.mainIcon = 'mdi-alert-octagram';
           para.mainColor = 'red-darken-2';
           para.btnVariant = 'flat';
-          para.dividerColor = 'red-darken-2';
+          // para.dividerColor = 'red-darken-2';
           break;
         }
         case State.AlarmAck: {
@@ -117,7 +154,7 @@ export default {
           para.mainIcon = 'mdi-alert';
           para.mainColor = 'yellow-darken-3';
           para.btnVariant = 'flat';
-          para.dividerColor = 'yellow-darken-3';
+          // para.dividerColor = 'yellow-darken-3';
           break;
         }
         case State.FaultAck: {
@@ -129,7 +166,7 @@ export default {
         case State.EarlyWarning: {
           para.mainIcon = 'mdi-alert-outline';
           para.mainColor = 'yellow-darken-3';
-          para.dividerColor = 'yellow-darken-3';
+          // para.dividerColor = 'yellow-darken-3';
           break;
         }
         default:
@@ -142,8 +179,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.border {
-  border-left: 5px solid rgb(255, 255, 255);
+.border-left {
+  border-left: 4px solid v-bind('cardParameters.dividerColor');
 }
 .icon-area {
   min-width: min-content;

@@ -2,15 +2,15 @@
   <v-card :theme="theme">
     <top-widget @change-theme="changeTheme" @change-size="$emit('fold')" />
     <buttons-widget />
-    <message-card-list height="60vh" :messages="messages" />
+    <message-card-list height="75vh" :messages="messages" />
 
-    <screen-info-widget
+    <!-- <screen-info-widget
       :bar_ratio="bar_ratio"
       :screen_width="screen_width"
       :screen_height="screen_height"
       :width="width"
       :height="height"
-    />
+    /> -->
 
     <bottom-info class="bottom-widget" />
   </v-card>
@@ -95,6 +95,12 @@ export default {
 .bottom-widget {
   position: absolute;
   bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.info-widget {
+  position: absolute;
   right: 0;
   left: 0;
 }

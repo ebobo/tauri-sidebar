@@ -120,4 +120,20 @@ export const TestMessages: Message[] = [
     Type: State.FaultAck,
     Timestamp: '23.05.22-15:56',
   },
+  {
+    UnitId: 'N2.P7',
+    UnitClass: 'INP',
+    UnitFunc: '*',
+    System: 'AutroSafe',
+    Type: State.Fault,
+    Timestamp: '23.05.22-15:55',
+  },
+  {
+    UnitId: 'N2.P8',
+    UnitClass: 'PNT',
+    UnitFunc: 'MUL',
+    System: 'AutroSafe',
+    Type: State.FaultAck,
+    Timestamp: '23.05.22-15:56',
+  },
 ];
