@@ -37,7 +37,7 @@
         >Filter</v-chip
       >
       <v-spacer />
-      <v-chip-group class="mr-5" v-model="messageFilter" column multiple>
+      <v-chip-group class="mr-3" v-model="messageFilter" column multiple>
         <v-chip size="small" color="red-darken-2" filter outlined>Alarm</v-chip>
         <v-chip size="small" color="yellow-darken-3" filter outlined
           >Fault</v-chip

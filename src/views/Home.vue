@@ -1,6 +1,8 @@
 <template>
   <v-app class="app-area">
     <side-bar
+      v-if="!smallSideBarOpen"
+      :main_theme="theme"
       class="fill-height"
       :width="windowWidth"
       :height="windowHeight"
@@ -9,9 +11,15 @@
       :bar_ratio="sideBarScreenRatio"
       :messages="testMessgaes"
       @fold="switchBars"
-      v-if="!smallSideBarOpen"
+      @change-theme="changeTheme"
     />
-    <small-side-bar :bar_ratio="sideBarScreenRatio" v-if="smallSideBarOpen" />
+    <small-side-bar
+      v-if="smallSideBarOpen"
+      class="fill-height"
+      :main_theme="theme"
+      :bar_ratio="sideBarScreenRatio"
+      @change-theme="changeTheme"
+    />
   </v-app>
 </template>
 
@@ -33,6 +41,7 @@ export default {
     windowHeight: number;
     sideBarScreenRatio: number;
     testMessgaes: Message[];
+    theme: string;
   } {
     return {
       smallSideBarOpen: false,
@@ -42,6 +51,7 @@ export default {
       windowHeight: window.innerHeight,
       sideBarScreenRatio: screen.availWidth / window.innerWidth,
       testMessgaes: TestMessages,
+      theme: 'light',
     };
   },
   created() {
@@ -65,12 +75,16 @@ export default {
     switchBars() {
       this.smallSideBarOpen = !this.smallSideBarOpen;
     },
+
+    changeTheme() {
+      if (this.theme === 'dark') {
+        this.theme = 'light';
+      } else {
+        this.theme = 'dark';
+      }
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.app-area {
-  background-color: #0f9b0f;
-}
-</style>
+<style lang="scss" scoped></style>

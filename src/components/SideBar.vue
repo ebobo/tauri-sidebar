@@ -1,16 +1,20 @@
 <template>
-  <v-card :theme="theme">
-    <top-widget @change-theme="changeTheme" @change-size="$emit('fold')" />
+  <v-card :theme="main_theme">
+    <top-widget
+      :main_theme="main_theme"
+      @change-theme="$emit('change-theme')"
+      @change-size="$emit('fold')"
+    />
     <buttons-widget />
     <message-card-list height="75vh" :messages="messages" />
 
-    <!-- <screen-info-widget
+    <screen-info-widget
       :bar_ratio="bar_ratio"
       :screen_width="screen_width"
       :screen_height="screen_height"
       :width="width"
       :height="height"
-    /> -->
+    />
 
     <bottom-info class="bottom-widget" />
   </v-card>
@@ -20,7 +24,6 @@
 import MessageCardList from './MessageCardList.vue';
 import MessageBannerList from './MessageBannerList.vue';
 import { Message } from '../data/test';
-import InfoWidget from './InfoWidget.vue';
 import TopWidget from './TopWidget.vue';
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import ButtonsWidget from './ButtonsWidget.vue';
@@ -30,7 +33,6 @@ export default {
   components: {
     MessageCardList,
     MessageBannerList,
-    InfoWidget,
     TopWidget,
     ScreenInfoWidget,
     ButtonsWidget,
@@ -67,23 +69,14 @@ export default {
       type: Array as () => Message[],
       default: [],
     },
-  },
-  data() {
-    return {
-      theme: 'light',
-    };
-  },
-
-  methods: {
-    changeTheme() {
-      if (this.theme === 'dark') {
-        this.theme = 'light';
-        console.log(this.height);
-      } else {
-        this.theme = 'dark';
-      }
+    main_theme: {
+      required: true,
+      type: String,
+      default: 'light',
     },
   },
+
+  methods: {},
 };
 </script>
 

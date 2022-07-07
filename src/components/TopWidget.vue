@@ -4,7 +4,7 @@
       alt="Autronica Logo"
       class="shrink mr-2"
       contain
-      src="../assets/autronica_logo.png"
+      :src="mainIconPath"
       transition="scale-transition"
       width="50"
     />
@@ -20,7 +20,26 @@
 </template>
 
 <script lang="ts">
+
+import logo from `../assets/autronica_logo.png`
+import darkLogo from `../assets/autronica_logo_dark.png`
+
 export default {
+  props: {
+    main_theme: {
+      required: true,
+      type: String,
+      default: "light",
+    },
+  },
+  computed: {
+    mainIconPath() {
+      if (this.main_theme === "dark") {
+        return logo
+      }
+      return darkLogo
+    },
+  },
   methods: {
     changeTheme() {
       this.$emit('change-theme');
