@@ -142,6 +142,9 @@ export default {
     changeTheme() {
       this.$emit('change-theme');
     },
+    changeSize() {
+      this.$emit('change-size');
+    },
   },
 
   computed: {
