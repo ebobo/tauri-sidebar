@@ -9,7 +9,9 @@
       width="50"
     />
     <v-spacer></v-spacer>
-    <v-label></v-label>
+    <v-btn icon @click="changeSize">
+      <v-icon size="xsmall">mdi-monitor-screenshot</v-icon>
+    </v-btn>
     <v-btn icon @click="changeSize">
       <v-icon>mdi-resize</v-icon>
     </v-btn>

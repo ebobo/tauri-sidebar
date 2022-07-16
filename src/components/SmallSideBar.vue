@@ -16,7 +16,7 @@
       </v-btn>
     </v-row>
     <v-row class="mt-4 mb-4" align="center" justify="center">
-      <v-btn variant="flat" icon @click="changeTheme">
+      <v-btn variant="flat" icon @click="changeSize">
         <v-icon>mdi-resize</v-icon>
       </v-btn>
     </v-row>
@@ -143,7 +143,7 @@ export default {
       this.$emit('change-theme');
     },
     changeSize() {
-      this.$emit('change-size');
+      this.$emit('fold');
     },
   },
 

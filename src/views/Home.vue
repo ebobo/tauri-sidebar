@@ -18,6 +18,7 @@
       class="fill-height"
       :main_theme="theme"
       :bar_ratio="sideBarScreenRatio"
+      @fold="switchBars"
       @change-theme="changeTheme"
     />
   </v-app>
@@ -34,28 +35,29 @@ export default {
     SmallSideBar,
   },
   data(): {
-    smallSideBarOpen: boolean;
     screenWidth: number;
     screenHeight: number;
     windowWidth: number;
     windowHeight: number;
     sideBarScreenRatio: number;
+    smallSideBarOpen: boolean;
     testMessgaes: Message[];
     theme: string;
   } {
     return {
-      smallSideBarOpen: false,
       screenWidth: screen.availWidth,
       screenHeight: screen.availHeight,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
       sideBarScreenRatio: screen.availWidth / window.innerWidth,
+      smallSideBarOpen: false,
       testMessgaes: TestMessages,
       theme: 'light',
     };
   },
   created() {
     window.addEventListener('resize', this.onResize);
+    this.onResize();
   },
   destroyed() {
     window.removeEventListener('resize', this.onResize);
@@ -65,7 +67,7 @@ export default {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
       this.sideBarScreenRatio = this.screenWidth / this.windowWidth;
-      if (this.sideBarScreenRatio > 40) {
+      if (this.sideBarScreenRatio > 30) {
         this.smallSideBarOpen = true;
       } else {
         this.smallSideBarOpen = false;

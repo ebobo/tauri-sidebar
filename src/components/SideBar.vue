@@ -7,15 +7,15 @@
     />
     <buttons-widget />
     <message-card-list height="75vh" :messages="messages" />
-
+    <v-pagination v-model="page" :length="4" rounded="circle"></v-pagination>
     <screen-info-widget
+      class="info-widget"
       :bar_ratio="bar_ratio"
       :screen_width="screen_width"
       :screen_height="screen_height"
       :width="width"
       :height="height"
     />
-
     <bottom-info class="bottom-widget" />
   </v-card>
 </template>
@@ -86,7 +86,7 @@ export default {
 }
 
 .bottom-widget {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
@@ -96,5 +96,6 @@ export default {
   position: absolute;
   right: 0;
   left: 0;
+  bottom: 55px;
 }
 </style>
