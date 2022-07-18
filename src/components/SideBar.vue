@@ -4,11 +4,13 @@
       :main_theme="main_theme"
       @change-theme="$emit('change-theme')"
       @change-size="$emit('fold')"
+      @screen-info="showScreenInfo"
     />
     <buttons-widget />
     <message-card-list height="75vh" :messages="messages" />
     <v-pagination v-model="page" :length="4" rounded="circle"></v-pagination>
     <screen-info-widget
+      v-if="dispScreenInfo"
       class="info-widget"
       :bar_ratio="bar_ratio"
       :screen_width="screen_width"
@@ -75,8 +77,19 @@ export default {
       default: 'light',
     },
   },
+  data(): {
+    dispScreenInfo: boolean;
+  } {
+    return {
+      dispScreenInfo: false,
+    };
+  },
 
-  methods: {},
+  methods: {
+    showScreenInfo() {
+      this.dispScreenInfo = !this.dispScreenInfo;
+    },
+  },
 };
 </script>
 

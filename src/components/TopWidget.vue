@@ -9,7 +9,7 @@
       width="50"
     />
     <v-spacer></v-spacer>
-    <v-btn icon @click="changeSize">
+    <v-btn icon @click="showScreenInfo">
       <v-icon size="xsmall">mdi-monitor-screenshot</v-icon>
     </v-btn>
     <v-btn icon @click="changeSize">
@@ -48,6 +48,9 @@ export default {
     },
     changeSize() {
       this.$emit('change-size');
+    },
+    showScreenInfo() {
+      this.$emit('screen-info');
     },
   },
 };

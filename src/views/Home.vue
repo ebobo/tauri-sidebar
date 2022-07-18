@@ -9,7 +9,7 @@
       :screen_width="screenWidth"
       :screen_height="screenHeight"
       :bar_ratio="sideBarScreenRatio"
-      :messages="testMessgaes"
+      :messages="eventMessgaes"
       @fold="switchBars"
       @change-theme="changeTheme"
     />
@@ -41,8 +41,9 @@ export default {
     windowHeight: number;
     sideBarScreenRatio: number;
     smallSideBarOpen: boolean;
-    testMessgaes: Message[];
+    eventMessgaes: Message[];
     theme: string;
+    event_source: EventSource | null;
   } {
     return {
       screenWidth: screen.availWidth,
@@ -51,15 +52,18 @@ export default {
       windowHeight: window.innerHeight,
       sideBarScreenRatio: screen.availWidth / window.innerWidth,
       smallSideBarOpen: false,
-      testMessgaes: TestMessages,
+      eventMessgaes: [],
       theme: 'light',
+      event_source: null,
     };
   },
   created() {
     window.addEventListener('resize', this.onResize);
     this.onResize();
+    this.connectSSE();
   },
   destroyed() {
+    this.disconnectSSE();
     window.removeEventListener('resize', this.onResize);
   },
   methods: {
@@ -83,6 +87,37 @@ export default {
         this.theme = 'light';
       } else {
         this.theme = 'dark';
+      }
+    },
+
+    connectSSE() {
+      if (this.event_source === null) {
+        this.event_source = new EventSource('http://localhost:5005/stream');
+
+        console.log('connect to sse');
+        // console.log(this.event_source);
+
+        this.event_source.addEventListener('clear', (event: MessageEvent) => {
+          const data = event.data;
+          console.log(data);
+          if (data === 'all') {
+            this.eventMessgaes = [];
+          }
+        });
+
+        this.event_source.addEventListener('message', (event: MessageEvent) => {
+          const data = JSON.parse(event.data);
+          console.log(data);
+          this.eventMessgaes = this.eventMessgaes.concat(data);
+        });
+      }
+    },
+
+    disconnectSSE() {
+      if (this.event_source !== null) {
+        this.event_source.close();
+        this.eventMessgaes = [];
+        this.event_source = null;
       }
     },
   },

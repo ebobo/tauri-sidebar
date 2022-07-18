@@ -27,8 +27,8 @@ export default {
 
 <style lang="scss" scoped>
 .card-list {
-  /* overflow: hidden !important; */
-  /* scrollbar-width: none; */
-  /* -ms-overflow-style: none; */
+  //overflow: hidden !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 </style>
