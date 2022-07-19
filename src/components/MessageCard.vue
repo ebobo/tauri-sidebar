@@ -1,5 +1,5 @@
 <template>
-  <v-container :style="borderStyles">
+  <v-container>
     <v-row>
       <v-col cols="2" xs="4" class="icon-area fill-height" align-self="center">
         <v-icon :color="cardParameters.mainColor" size="x-large">
@@ -32,7 +32,13 @@
           </p>
         </v-row>
       </v-col>
-      <v-col cols="2" xs="4" class="fill-height btn-area" align-self="center">
+      <v-col
+        cols="2"
+        xs="4"
+        class="fill-height btn-area"
+        align-self="center"
+        align="center"
+      >
         <v-btn
           :variant="cardParameters.btnVariant"
           size="small"
@@ -125,26 +131,26 @@ export default {
       };
       switch (this.message.Type) {
         case State.SilentAlarm: {
-          para.mainIcon = 'mdi-alert-octagram-outline';
+          para.mainIcon = 'mdi-alert';
           para.mainColor = 'red-darken-2';
           // para.dividerColor = 'red-darken-2';
           break;
         }
         case State.PreAlarm: {
-          para.mainIcon = 'mdi-alert-octagram-outline';
+          para.mainIcon = 'mdi-alert';
           para.mainColor = 'red-darken-2';
           // para.dividerColor = 'red-darken-2';
           break;
         }
         case State.Alarm: {
-          para.mainIcon = 'mdi-alert-octagram';
+          para.mainIcon = 'mdi-alert';
           para.mainColor = 'red-darken-2';
           para.btnVariant = 'flat';
           // para.dividerColor = 'red-darken-2';
           break;
         }
         case State.AlarmAck: {
-          para.mainIcon = 'mdi-alert-octagram';
+          para.mainIcon = 'mdi-alert';
           para.mainColor = 'red-darken-2';
           para.btnVariant = 'flat';
           para.ackIcon = 'mdi-account-check-outline';

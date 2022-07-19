@@ -1,14 +1,23 @@
 <template>
-  <v-card :theme="main_theme">
+  <v-card :theme="main_theme" class="card">
     <top-widget
       :main_theme="main_theme"
       @change-theme="$emit('change-theme')"
       @change-size="$emit('fold')"
       @screen-info="showScreenInfo"
     />
-    <buttons-widget />
-    <message-card-list height="75vh" :messages="messages" />
-    <v-pagination v-model="page" :length="4" rounded="circle"></v-pagination>
+    <buttons-widget :total_events="totalEvents" />
+
+    <message-card-list class="list" :messages="messagesOnPage" />
+
+    <v-pagination
+      class="pagi"
+      v-model="pagi.page"
+      :length="totalPages"
+      rounded="circle"
+      :total-visible="pagi.visible"
+    ></v-pagination>
+
     <screen-info-widget
       v-if="dispScreenInfo"
       class="info-widget"
@@ -30,6 +39,12 @@ import TopWidget from './TopWidget.vue';
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import ButtonsWidget from './ButtonsWidget.vue';
 import BottomInfo from './BottomInfo.vue';
+
+interface pagination {
+  page: number;
+  perPage: number;
+  visible: number;
+}
 
 export default {
   components: {
@@ -79,12 +94,34 @@ export default {
   },
   data(): {
     dispScreenInfo: boolean;
+    pagi: pagination;
   } {
     return {
       dispScreenInfo: false,
+      pagi: {
+        page: 1,
+        perPage: 12,
+        visible: 4,
+      },
     };
   },
-
+  computed: {
+    messagesOnPage(): Message[] {
+      return this.messages.slice(
+        (this.pagi.page - 1) * this.pagi.perPage,
+        this.pagi.page * this.pagi.perPage
+      );
+    },
+    totalEvents(): number {
+      return this.messages.length;
+    },
+    totalPages(): number {
+      if (this.messages.length > 0) {
+        return Math.ceil(this.messages.length / this.pagi.perPage);
+      }
+      return 0;
+    },
+  },
   methods: {
     showScreenInfo() {
       this.dispScreenInfo = !this.dispScreenInfo;
@@ -98,11 +135,18 @@ export default {
   background-color: #0f409b;
 }
 
+.card {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.list {
+  flex: 1 1 100px;
+}
+
 .bottom-widget {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
+  flex: 0 1 55px;
 }
 
 .info-widget {
@@ -110,5 +154,9 @@ export default {
   right: 0;
   left: 0;
   bottom: 55px;
+}
+
+.pagi {
+  flex: 0 1 50px;
 }
 </style>

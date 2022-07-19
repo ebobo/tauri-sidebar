@@ -28,12 +28,12 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row justify="center" class="mt-0 mb-0">
-      <v-chip class="mt-1 ml-6">78</v-chip>
+    <v-row align="center" class="mt-0 mb-0">
+      <v-chip size="small" class="ml-6">{{ total_events }}</v-chip>
       <v-chip
         size="small"
         append-icon="mdi-sort-alphabetical-descending"
-        class="mt-2 ml-4"
+        class="ml-4"
         >Filter</v-chip
       >
       <v-spacer />
@@ -42,8 +42,8 @@
         <v-chip size="small" color="yellow-darken-3" filter outlined
           >Fault</v-chip
         >
-        <v-chip size="small" color="green-darken-3" filter outlined
-          >Acknowledged</v-chip
+        <v-chip size="small" color="gray-darken-4" filter outlined
+          >Unknow</v-chip
         >
       </v-chip-group>
     </v-row>
@@ -55,7 +55,15 @@ export default {
   data() {
     return {
       search: false,
+      messageFilter: [0, 1, 2],
     };
+  },
+  props: {
+    total_events: {
+      required: true,
+      type: Number,
+      default: 0,
+    },
   },
   methods: {
     openSearch() {
@@ -64,3 +72,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.cyan-background {
+  background-color: #5db4a1;
+}
+
+.pink-background {
+  background-color: #cd7cdd;
+}
+</style>

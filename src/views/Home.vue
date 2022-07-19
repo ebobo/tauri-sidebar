@@ -107,7 +107,7 @@ export default {
 
         this.event_source.addEventListener('message', (event: MessageEvent) => {
           const data = JSON.parse(event.data);
-          console.log(data);
+          console.log('add event : ', data.length);
           this.eventMessgaes = this.eventMessgaes.concat(data);
         });
       }
