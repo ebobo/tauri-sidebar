@@ -31,24 +31,24 @@
     </v-row>
     <div class="space"></div>
     <v-row class="mr-1 mt-10 mb-10" justify="center">
-      <v-badge content="99+" color="red-darken-2">
+      <v-badge :content="TotalAlarms" color="red-darken-2">
         <v-icon size="x-large" color="red-darken-2">mdi-alert-octagram</v-icon>
       </v-badge>
     </v-row>
     <v-row class="mr-1 mt-10 mb-10" justify="center">
-      <v-badge content="10" color="yellow-darken-3">
+      <v-badge :content="TotalFaults" color="yellow-darken-3">
         <v-icon size="x-large" color="yellow-darken-3">mdi-alert</v-icon>
       </v-badge>
     </v-row>
     <v-row class="mr-1 mt-10 mb-10" justify="center">
-      <v-badge content="1" color="grey-darken-2">
+      <v-badge :content="TotalUnknowns" color="grey-darken-2">
         <v-icon size="x-large" color="grey-darken-2"
           >mdi-help-circle-outline</v-icon
         ></v-badge
       >
     </v-row>
     <v-row class="mr-1 mt-10 mb-10" justify="center">
-      <v-badge content="45" color="green-darken-3">
+      <v-badge :content="TotalAckeds" color="green-darken-3">
         <v-icon size="x-large" color="green-darken-3"
           >mdi-account-check-outline</v-icon
         ></v-badge
@@ -116,6 +116,7 @@
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import logo from `../assets/autronica_logo.png`
 import darkLogo from `../assets/autronica_logo_dark.png`
+import { State, Message } from '../data/test';
 
 export default {
   data() {
@@ -137,6 +138,11 @@ export default {
       type: Number,
       default: 0,
     },
+    messages: {
+      required: false,
+      type: Array as () => Message[],
+      default: [],
+    },
   },
   methods: {
     changeTheme() {
@@ -148,6 +154,46 @@ export default {
   },
 
   computed: {
+    TotalAlarms() {
+      const num = this.messages.filter(
+        (m: Message) => m.Type === State.Alarm
+      ).length;
+      if (num > 999) {
+        return '99+';
+      }
+      return num.toString();
+    },
+
+    TotalFaults() {
+      const num = this.messages.filter(
+        (m: Message) => m.Type === State.Fault
+      ).length;
+      if (num > 999) {
+        return '99+';
+      }
+      return num.toString();
+    },
+
+    TotalUnknowns() {
+      const num = this.messages.filter(
+        (m: Message) => m.Type === State.Unknow
+      ).length;
+      if (num > 999) {
+        return '99+';
+      }
+      return num.toString();
+    },
+
+    TotalAckeds() {
+      const num = this.messages.filter(
+        (m: Message) => m.Acknowledged === true
+      ).length;
+      if (num > 999) {
+        return '99+';
+      }
+      return num.toString();
+    },
+
     mainIconPath() {
       if (this.main_theme === 'dark') {
         return logo;

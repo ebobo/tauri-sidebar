@@ -4,15 +4,16 @@
       :main_theme="main_theme"
       @change-theme="$emit('change-theme')"
       @change-size="$emit('fold')"
+      @change-settings="showSettings"
       @screen-info="showScreenInfo"
     />
+    <setting-card v-if="dispSettings" />
     <buttons-widget
+      v-if="!dispSettings"
       :total_events="totalEvents"
       @event-filter-change="setFiltedEventTypes"
     />
-
     <message-card-list class="list" :messages="messagesOnPage" />
-
     <v-pagination
       class="pagi"
       v-model="pagi.page"
@@ -42,6 +43,7 @@ import TopWidget from './TopWidget.vue';
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import ButtonsWidget from './ButtonsWidget.vue';
 import BottomInfo from './BottomInfo.vue';
+import SettingCard from './SettingCard.vue';
 
 interface pagination {
   page: number;
@@ -57,6 +59,7 @@ export default {
     ScreenInfoWidget,
     ButtonsWidget,
     BottomInfo,
+    SettingCard,
   },
   props: {
     width: {
@@ -97,11 +100,13 @@ export default {
   },
   data(): {
     dispScreenInfo: boolean;
+    dispSettings: boolean;
     pagi: pagination;
     filtedEventTypes: string[];
   } {
     return {
       dispScreenInfo: false,
+      dispSettings: false,
       pagi: {
         page: 1,
         perPage: 10,
@@ -135,6 +140,9 @@ export default {
   methods: {
     showScreenInfo() {
       this.dispScreenInfo = !this.dispScreenInfo;
+    },
+    showSettings() {
+      this.dispSettings = !this.dispSettings;
     },
     setFiltedEventTypes(type: string, value: boolean) {
       if (!value) {

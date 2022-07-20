@@ -16,6 +16,7 @@
     <small-side-bar
       v-if="smallSideBarOpen"
       class="fill-height"
+      :messages="eventMessgaes"
       :main_theme="theme"
       :bar_ratio="sideBarScreenRatio"
       @fold="switchBars"
@@ -27,7 +28,7 @@
 <script lang="ts">
 import SideBar from '../components/SideBar.vue';
 import SmallSideBar from '../components/SmallSideBar.vue';
-import { TestMessages, Message } from '../data/test';
+import { Message } from '../data/test';
 
 export default {
   components: {
@@ -41,8 +42,8 @@ export default {
     windowHeight: number;
     sideBarScreenRatio: number;
     smallSideBarOpen: boolean;
-    eventMessgaes: Message[];
     theme: string;
+    eventMessgaes: Message[];
     event_source: EventSource | null;
   } {
     return {
@@ -52,8 +53,8 @@ export default {
       windowHeight: window.innerHeight,
       sideBarScreenRatio: screen.availWidth / window.innerWidth,
       smallSideBarOpen: false,
-      eventMessgaes: [],
       theme: 'light',
+      eventMessgaes: [],
       event_source: null,
     };
   },
@@ -95,7 +96,6 @@ export default {
         this.event_source = new EventSource('http://localhost:5005/stream');
 
         console.log('connect to sse');
-        // console.log(this.event_source);
 
         this.event_source.addEventListener('clear', (event: MessageEvent) => {
           const data = event.data;
