@@ -6,7 +6,10 @@
       @change-size="$emit('fold')"
       @screen-info="showScreenInfo"
     />
-    <buttons-widget :total_events="totalEvents" />
+    <buttons-widget
+      :total_events="totalEvents"
+      @event-filter-change="setFiltedEventTypes"
+    />
 
     <message-card-list class="list" :messages="messagesOnPage" />
 
@@ -95,29 +98,36 @@ export default {
   data(): {
     dispScreenInfo: boolean;
     pagi: pagination;
+    filtedEventTypes: string[];
   } {
     return {
       dispScreenInfo: false,
       pagi: {
         page: 1,
-        perPage: 12,
+        perPage: 10,
         visible: 4,
       },
+      filtedEventTypes: [],
     };
   },
   computed: {
+    displayMessages(): Message[] {
+      return this.messages.filter(
+        (m: Message) => !this.filtedEventTypes.includes(m.Type)
+      );
+    },
     messagesOnPage(): Message[] {
-      return this.messages.slice(
+      return this.displayMessages.slice(
         (this.pagi.page - 1) * this.pagi.perPage,
         this.pagi.page * this.pagi.perPage
       );
     },
     totalEvents(): number {
-      return this.messages.length;
+      return this.displayMessages.length;
     },
     totalPages(): number {
-      if (this.messages.length > 0) {
-        return Math.ceil(this.messages.length / this.pagi.perPage);
+      if (this.displayMessages.length > 0) {
+        return Math.ceil(this.displayMessages.length / this.pagi.perPage);
       }
       return 0;
     },
@@ -125,6 +135,18 @@ export default {
   methods: {
     showScreenInfo() {
       this.dispScreenInfo = !this.dispScreenInfo;
+    },
+    setFiltedEventTypes(type: string, value: boolean) {
+      if (!value) {
+        if (!this.filtedEventTypes.includes(type)) {
+          this.filtedEventTypes.push(type);
+        }
+      } else {
+        const index = this.filtedEventTypes.indexOf(type);
+        if (index > -1) {
+          this.filtedEventTypes.splice(index, 1);
+        }
+      }
     },
   },
 };

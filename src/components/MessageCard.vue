@@ -11,11 +11,11 @@
           <v-icon color="grey-darken-1" size="sm"
             >mdi-clock-time-nine-outline</v-icon
           >
-          <v-label class="ml-1 text-subtitle-2">
+          <v-label class="ml-1 mr-2 text-subtitle-2">
             {{ message.Timestamp }}
           </v-label>
 
-          <v-label class="ml-4 text-subtitle-2">
+          <v-label class="text-subtitle-2">
             {{ message.System + ': ' + message.UnitId }}
           </v-label>
           <!-- <v-badge
@@ -127,7 +127,7 @@ export default {
         mainColor: 'grey-darken-2',
         ackIcon: 'mdi-account-question-outline',
         btnVariant: 'tonal',
-        dividerColor: 'grey-darken-2',
+        dividerColor: 'grey-lighten-1',
       };
       switch (this.message.Type) {
         case State.SilentAlarm: {

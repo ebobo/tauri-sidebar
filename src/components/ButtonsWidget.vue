@@ -33,18 +33,43 @@
       <v-chip
         size="small"
         append-icon="mdi-sort-alphabetical-descending"
-        class="ml-4"
-        >Filter</v-chip
+        class="ml-1"
+        >Sort</v-chip
       >
       <v-spacer />
       <v-chip-group class="mr-3" v-model="messageFilter" column multiple>
-        <v-chip size="small" color="red-darken-2" filter outlined>Alarm</v-chip>
-        <v-chip size="small" color="yellow-darken-3" filter outlined
+        <v-chip
+          size="small"
+          color="red-darken-2"
+          filter
+          outlined
+          @group:selected="filterChanged($event, 'Alarm')"
+          >Alarm</v-chip
+        >
+        <v-chip
+          size="small"
+          color="yellow-darken-3"
+          filter
+          outlined
+          @group:selected="filterChanged($event, 'Fault')"
           >Fault</v-chip
         >
-        <v-chip size="small" color="gray-darken-4" filter outlined
-          >Unknow</v-chip
+        <v-chip
+          size="small"
+          color="gray-darken-4"
+          filter
+          outlined
+          @group:selected="filterChanged($event, 'Unknow')"
+          >Unknown</v-chip
         >
+        <!-- <v-chip
+          size="small"
+          color="green-darken-4"
+          filter
+          outlined
+          @group:selected="filterChanged($event, 'Acked')"
+          >Acked</v-chip
+        > -->
       </v-chip-group>
     </v-row>
   </div>
@@ -68,6 +93,9 @@ export default {
   methods: {
     openSearch() {
       this.search = !this.search;
+    },
+    filterChanged(e: any, name: string) {
+      this.$emit('event-filter-change', name, e.value);
     },
   },
 };
