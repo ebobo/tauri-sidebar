@@ -7,9 +7,7 @@
       @change-settings="showSettings"
       @screen-info="showScreenInfo"
     />
-    <setting-card v-if="dispSettings" />
     <buttons-widget
-      v-if="!dispSettings"
       :total_events="totalEvents"
       @event-filter-change="setFiltedEventTypes"
     />
@@ -32,6 +30,20 @@
       :height="height"
     />
     <bottom-info class="bottom-widget" />
+  </v-card>
+
+  <v-card :theme="main_theme" tile class="setting-dialog" v-if="dispSettings">
+    <v-toolbar flat dark color="primary">
+      <v-btn icon dark @click="dialog = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+      <v-toolbar-title>Settings</v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-toolbar>
+
+    <v-card-actions>
+      <v-btn color="primary" text @click="dispSettings = false"> Close </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -184,6 +196,14 @@ export default {
   right: 0;
   left: 0;
   bottom: 55px;
+}
+
+.setting-dialog {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 250px;
 }
 
 .pagi {
