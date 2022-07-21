@@ -2,7 +2,11 @@
   <v-container>
     <v-row>
       <v-col cols="2" xs="4" class="icon-area fill-height" align-self="center">
-        <v-icon :color="cardParameters.mainColor" size="x-large">
+        <v-icon
+          :color="cardParameters.mainColor"
+          size="x-large"
+          @click="pinEvent"
+        >
           {{ cardParameters.mainIcon }}</v-icon
         >
       </v-col>
@@ -81,6 +85,9 @@ export default {
       } else if (this.message.Type === State.Fault) {
         this.message.Type = State.FaultAck;
       }
+    },
+    pinEvent() {
+      console.log('pin');
     },
   },
   computed: {

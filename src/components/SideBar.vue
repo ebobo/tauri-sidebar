@@ -32,19 +32,13 @@
     <bottom-info class="bottom-widget" />
   </v-card>
 
-  <v-card :theme="main_theme" tile class="setting-dialog" v-if="dispSettings">
-    <v-toolbar flat dark color="primary">
-      <v-btn icon dark @click="dialog = false">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-      <v-toolbar-title>Settings</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-
-    <v-card-actions>
-      <v-btn color="primary" text @click="dispSettings = false"> Close </v-btn>
-    </v-card-actions>
-  </v-card>
+  <setting-widget
+    v-if="dispSettings"
+    :theme="main_theme"
+    :events_per_page="pagi.perPage"
+    @close-settings="dispSettings = false"
+    @events-per-page="setEventsPerPage"
+  />
 </template>
 
 <script lang="ts">
@@ -55,7 +49,7 @@ import TopWidget from './TopWidget.vue';
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import ButtonsWidget from './ButtonsWidget.vue';
 import BottomInfo from './BottomInfo.vue';
-import SettingCard from './SettingCard.vue';
+import SettingWidget from './SettingWidget.vue';
 
 interface pagination {
   page: number;
@@ -71,7 +65,7 @@ export default {
     ScreenInfoWidget,
     ButtonsWidget,
     BottomInfo,
-    SettingCard,
+    SettingWidget,
   },
   props: {
     width: {
@@ -168,6 +162,9 @@ export default {
         }
       }
     },
+    setEventsPerPage(num: number) {
+      this.pagi.perPage = num;
+    },
   },
 };
 </script>
@@ -197,15 +194,6 @@ export default {
   left: 0;
   bottom: 55px;
 }
-
-.setting-dialog {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 250px;
-}
-
 .pagi {
   flex: 0 1 50px;
 }
