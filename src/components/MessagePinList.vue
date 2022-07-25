@@ -1,7 +1,7 @@
 <template>
-  <v-list class="card-list">
+  <v-list>
     <message-card
-      v-for="m in messages"
+      v-for="m in pinedMessages"
       :key="m.UnitId"
       :message="m"
     ></message-card>
@@ -16,7 +16,7 @@ export default {
     MessageCard,
   },
   props: {
-    messages: {
+    pinedMessages: {
       required: false,
       type: Array as () => Message[],
       default: [],
@@ -25,9 +25,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.card-list {
-  overflow: auto;
-  padding: 0;
-}
-</style>
+<style lang="scss" scoped></style>

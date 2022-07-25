@@ -57,6 +57,11 @@ interface pagination {
   visible: number;
 }
 
+interface pinedInfo {
+  UnitId: string;
+  System: string;
+}
+
 export default {
   components: {
     MessageCardList,

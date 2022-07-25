@@ -43,7 +43,7 @@ export default {
     sideBarScreenRatio: number;
     smallSideBarOpen: boolean;
     theme: string;
-    eventMessgaes: Message[];
+    eventMessages: Message[];
     event_source: EventSource | null;
   } {
     return {
@@ -54,7 +54,7 @@ export default {
       sideBarScreenRatio: screen.availWidth / window.innerWidth,
       smallSideBarOpen: false,
       theme: 'light',
-      eventMessgaes: [],
+      eventMessages: [],
       event_source: null,
     };
   },
