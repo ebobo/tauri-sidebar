@@ -4,6 +4,7 @@
       v-for="m in messages"
       :key="m.UnitId"
       :message="m"
+      @pin-event="$emit('pin-event', m)"
     ></message-card>
   </v-list>
 </template>
@@ -20,6 +21,11 @@ export default {
       required: false,
       type: Array as () => Message[],
       default: [],
+    },
+  },
+  methods: {
+    emitPin(id: string, system: string) {
+      this.$emit('pin-event', id, system);
     },
   },
 };

@@ -11,7 +11,16 @@
       :total_events="totalEvents"
       @event-filter-change="setFiltedEventTypes"
     />
-    <message-card-list class="list" :messages="messagesOnPage" />
+    <message-pin-list
+      v-if="pinedEventsList.length > 0"
+      :pinedMessages="pinedEventsList"
+      @unpin-event="unpinMessage"
+    />
+    <message-card-list
+      class="list"
+      :messages="messagesOnPage"
+      @pin-event="pinMessage"
+    />
     <v-pagination
       class="pagi"
       v-model="pagi.page"
@@ -43,7 +52,7 @@
 
 <script lang="ts">
 import MessageCardList from './MessageCardList.vue';
-import MessageBannerList from './MessageBannerList.vue';
+import MessagePinList from './MessagePinList.vue';
 import { Message } from '../data/test';
 import TopWidget from './TopWidget.vue';
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
@@ -57,15 +66,10 @@ interface pagination {
   visible: number;
 }
 
-interface pinedInfo {
-  UnitId: string;
-  System: string;
-}
-
 export default {
   components: {
     MessageCardList,
-    MessageBannerList,
+    MessagePinList,
     TopWidget,
     ScreenInfoWidget,
     ButtonsWidget,
@@ -114,6 +118,7 @@ export default {
     dispSettings: boolean;
     pagi: pagination;
     filtedEventTypes: string[];
+    pinedEventsList: Message[];
   } {
     return {
       dispScreenInfo: false,
@@ -124,12 +129,15 @@ export default {
         visible: 4,
       },
       filtedEventTypes: [],
+      pinedEventsList: [],
     };
   },
   computed: {
     displayMessages(): Message[] {
       return this.messages.filter(
-        (m: Message) => !this.filtedEventTypes.includes(m.Type)
+        (m: Message) =>
+          !this.filtedEventTypes.includes(m.Type) &&
+          !this.pinedEventsList.includes(m)
       );
     },
     messagesOnPage(): Message[] {
@@ -168,7 +176,28 @@ export default {
       }
     },
     setEventsPerPage(num: number) {
-      this.pagi.perPage = num;
+      if (num > 0) {
+        this.pagi.perPage = num;
+      }
+    },
+    pinMessage(m: Message) {
+      const index = this.pinedEventsList.findIndex(
+        (event: Message) => event === m
+      );
+      if (index === -1) {
+        //add pined info for one event message
+        this.pinedEventsList.push(m);
+      }
+      this.setEventsPerPage(this.pagi.perPage - 1);
+    },
+    unpinMessage(m: Message) {
+      const index = this.pinedEventsList.findIndex(
+        (event: Message) => event === m
+      );
+      if (index > -1) {
+        this.pinedEventsList.splice(index, 1);
+      }
+      this.setEventsPerPage(this.pagi.perPage + 1);
     },
   },
 };

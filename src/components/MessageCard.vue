@@ -2,10 +2,20 @@
   <v-container>
     <v-row>
       <v-col cols="2" xs="4" class="icon-area fill-height" align-self="center">
+        <v-badge icon="mdi-pin-outline" color="grey-lighten-1" v-if="pined">
+          <v-icon
+            :color="cardParameters.mainColor"
+            size="x-large"
+            @click="pinEvent"
+          >
+            {{ cardParameters.mainIcon }}</v-icon
+          ></v-badge
+        >
         <v-icon
           :color="cardParameters.mainColor"
           size="x-large"
           @click="pinEvent"
+          v-if="!pined"
         >
           {{ cardParameters.mainIcon }}</v-icon
         >
@@ -55,8 +65,11 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-divider inset :color="cardParameters.dividerColor"></v-divider>
-  <!-- <v-divider inset :color="cardParameters.dividerColor"></v-divider> -->
+  <v-divider
+    v-if="!lastOne"
+    inset
+    :color="cardParameters.dividerColor"
+  ></v-divider>
 </template>
 
 <script lang="ts">
@@ -77,6 +90,16 @@ export default {
       type: Object,
       default: '',
     },
+    pined: {
+      required: false,
+      type: Boolean,
+      default: false,
+    },
+    lastOne: {
+      required: false,
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     acknowledge() {
@@ -87,7 +110,7 @@ export default {
       }
     },
     pinEvent() {
-      console.log('pin');
+      this.$emit('pin-event');
     },
   },
   computed: {

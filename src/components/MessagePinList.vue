@@ -1,9 +1,11 @@
 <template>
-  <v-list>
+  <v-list class="pined-list">
     <message-card
       v-for="m in pinedMessages"
       :key="m.UnitId"
       :message="m"
+      :pined="true"
+      @pin-event="$emit('unpin-event', m)"
     ></message-card>
   </v-list>
 </template>
@@ -25,4 +27,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.pined-list {
+  overflow: auto;
+  padding: 0;
+}
+</style>
