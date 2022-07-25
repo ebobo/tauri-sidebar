@@ -7,14 +7,15 @@
       @change-settings="showSettings"
       @screen-info="showScreenInfo"
     />
-    <buttons-widget
-      :total_events="totalEvents"
-      @event-filter-change="setFiltedEventTypes"
-    />
+    <buttons-widget />
     <message-pin-list
       v-if="pinedEventsList.length > 0"
       :pinedMessages="pinedEventsList"
       @unpin-event="unpinMessage"
+    />
+    <chip-widget
+      :total_events="totalEvents"
+      @event-filter-change="setFiltedEventTypes"
     />
     <message-card-list
       class="list"
@@ -59,6 +60,7 @@ import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import ButtonsWidget from './ButtonsWidget.vue';
 import BottomInfo from './BottomInfo.vue';
 import SettingWidget from './SettingWidget.vue';
+import ChipWidget from './ChipWidget.vue';
 
 interface pagination {
   page: number;
@@ -75,6 +77,7 @@ export default {
     ButtonsWidget,
     BottomInfo,
     SettingWidget,
+    ChipWidget,
   },
   props: {
     width: {
