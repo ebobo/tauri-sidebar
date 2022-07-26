@@ -1,10 +1,11 @@
 <template>
   <v-list class="pined-list">
     <message-card
-      v-for="m in pinedMessages"
+      v-for="(m, index) in pinedMessages"
       :key="m.UnitId"
       :message="m"
       :pined="true"
+      :lastOne="index === pinedMessages.length - 1"
       @pin-event="$emit('unpin-event', m)"
     ></message-card>
   </v-list>
