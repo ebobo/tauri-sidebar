@@ -9,7 +9,7 @@
     />
     <buttons-widget />
     <message-pin-list
-      v-if="pinedEventsList.length > 0"
+      v-if="enablePin && pinedEventsList.length > 0"
       :pinedMessages="pinedEventsList"
       @unpin-event="unpinMessage"
     />
@@ -46,8 +46,10 @@
     v-if="dispSettings"
     :theme="main_theme"
     :events_per_page="pagi.perPage"
+    :enable_pin="enablePin"
     @close-settings="dispSettings = false"
     @events-per-page="setEventsPerPage"
+    @enable-pin-function="enablePinMessage"
   />
 </template>
 
@@ -122,6 +124,7 @@ export default {
     pagi: pagination;
     filtedEventTypes: string[];
     pinedEventsList: Message[];
+    enablePin: boolean;
   } {
     return {
       dispScreenInfo: false,
@@ -133,6 +136,7 @@ export default {
       },
       filtedEventTypes: [],
       pinedEventsList: [],
+      enablePin: false,
     };
   },
   computed: {
@@ -183,7 +187,18 @@ export default {
         this.pagi.perPage = num;
       }
     },
+    enablePinMessage(enable: boolean) {
+      if (this.enablePin != enable) {
+        this.enablePin = enable;
+        if (!enable) {
+          this.pinedEventsList = [];
+        }
+      }
+    },
     pinMessage(m: Message) {
+      if (!this.enablePin) {
+        return;
+      }
       const index = this.pinedEventsList.findIndex(
         (event: Message) => event === m
       );

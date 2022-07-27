@@ -8,9 +8,9 @@
       </v-btn>
     </v-toolbar>
 
-    <v-label class="subtitle">Events per page</v-label>
+    <v-label class="subtitle-tight">Events per page</v-label>
 
-    <v-row class="sub-row" justify="center">
+    <div class="sub-row" justify="center">
       <v-btn
         size="small"
         variant="text"
@@ -24,10 +24,21 @@
         icon="mdi-plus"
         @click="addEventsPerPage(true)"
       ></v-btn>
-    </v-row>
+    </div>
 
     <v-divider></v-divider>
+    <v-label class="subtitle-tight">Pin Events</v-label>
 
+    <v-switch
+      class="center-switch"
+      v-model="enable_pin"
+      color="#1E88E5"
+      hide-details
+      inset
+      :label="`${enable_pin ? 'on' : 'off'}`"
+    ></v-switch>
+
+    <v-divider></v-divider>
     <v-label class="subtitle">Sorting</v-label>
     <v-card-actions>
       <!-- <v-btn color="primary" text @click="dispSettings = false"> Close </v-btn> -->
@@ -47,13 +58,21 @@ export default {
       required: true,
       type: Number,
     },
+    enable_pin: {
+      required: true,
+      type: Boolean,
+    },
   },
   //   data() {
   //     return {
   //       eventsPerPage: 10,
   //     };
   //   },
-
+  watch: {
+    enable_pin(newValue: boolean) {
+      this.$emit('enable-pin-function', newValue);
+    },
+  },
   methods: {
     addEventsPerPage(plusOne: boolean) {
       let numberEvents = this.events_per_page;
@@ -91,7 +110,12 @@ export default {
   margin-left: 1rem;
   margin-bottom: 1rem;
 }
-
+.subtitle-tight {
+  font-size: medium;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
 .topbar {
   background-color: #82b1ff;
 }
@@ -103,6 +127,18 @@ export default {
 }
 
 .sub-row {
+  display: flex;
+  justify-content: center;
   margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.center-switch {
+  display: flex;
+  justify-content: center;
+  margin-left: 1rem;
+}
+.pink-background {
+  background-color: pink;
 }
 </style>
