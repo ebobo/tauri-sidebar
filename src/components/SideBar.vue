@@ -42,6 +42,8 @@
     <bottom-info class="bottom-widget" />
   </v-card>
 
+  <v-overlay v-model="showOverlay" z-index="2" :close-on-content-click="false">
+  </v-overlay>
   <setting-widget
     v-if="dispSettings"
     :theme="main_theme"
@@ -162,6 +164,9 @@ export default {
       }
       return 0;
     },
+    showOverlay(): boolean {
+      return this.dispSettings;
+    },
   },
   methods: {
     showScreenInfo() {
@@ -246,6 +251,7 @@ export default {
   left: 0;
   bottom: 55px;
 }
+
 .pagi {
   flex: 0 1 50px;
 }

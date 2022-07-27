@@ -115,6 +115,7 @@ export default {
   top: 0;
   bottom: 0;
   width: 250px;
+  z-index: 1000;
 }
 .title {
   font-size: large;
