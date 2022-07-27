@@ -8,8 +8,8 @@
       </v-btn>
     </v-toolbar>
 
+    <!-- Events per page -->
     <v-label class="subtitle-tight">Events per page</v-label>
-
     <div class="sub-row" justify="center">
       <v-btn
         size="small"
@@ -25,10 +25,10 @@
         @click="addEventsPerPage(true)"
       ></v-btn>
     </div>
-
     <v-divider></v-divider>
-    <v-label class="subtitle-tight">Pin Events</v-label>
 
+    <!-- Pin Events -->
+    <v-label class="subtitle-tight">Pin events</v-label>
     <v-switch
       class="center-switch"
       v-model="enable_pin"
@@ -37,8 +37,21 @@
       inset
       :label="`${enable_pin ? 'on' : 'off'}`"
     ></v-switch>
-
     <v-divider></v-divider>
+
+    <!-- Split Window -->
+    <v-label class="subtitle-tight">Split window</v-label>
+    <v-switch
+      class="center-switch"
+      v-model="enable_spilt"
+      color="#1E88E5"
+      hide-details
+      inset
+      :label="`${enable_spilt ? 'on' : 'off'}`"
+    ></v-switch>
+    <v-divider></v-divider>
+
+    <!-- Sorting -->
     <v-label class="subtitle">Sorting</v-label>
     <v-card-actions>
       <!-- <v-btn color="primary" text @click="dispSettings = false"> Close </v-btn> -->
@@ -59,6 +72,10 @@ export default {
       type: Number,
     },
     enable_pin: {
+      required: true,
+      type: Boolean,
+    },
+    enable_spilt: {
       required: true,
       type: Boolean,
     },
