@@ -22,7 +22,6 @@
       :messages="messagesOnPage"
       @pin-event="pinMessage"
     />
-
     <v-pagination
       class="pagi"
       v-model="pagi.page"
@@ -31,6 +30,8 @@
       :total-visible="pagi.visible"
     ></v-pagination>
 
+    <!-- <message-list :list_messages="messages" /> -->
+    <!-- <message-list :list_messages="messages" /> -->
     <screen-info-widget
       v-if="dispScreenInfo"
       class="info-widget"
@@ -59,6 +60,7 @@
 <script lang="ts">
 import MessageCardList from './MessageCardList.vue';
 import MessagePinList from './MessagePinList.vue';
+import MessageList from './MessageList.vue';
 import { Message } from '../data/test';
 import TopWidget from './TopWidget.vue';
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
@@ -77,6 +79,7 @@ export default {
   components: {
     MessageCardList,
     MessagePinList,
+    MessageList,
     TopWidget,
     ScreenInfoWidget,
     ButtonsWidget,
