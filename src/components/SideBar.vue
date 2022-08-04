@@ -1,60 +1,55 @@
 <template>
-  <v-card :theme="main_theme" class="card">
-    <top-widget
-      :main_theme="main_theme"
-      @change-theme="$emit('change-theme')"
-      @change-size="$emit('fold')"
-      @change-settings="showSettings"
-      @screen-info="showScreenInfo"
-    />
-    <buttons-widget />
-    <message-pin-list
-      v-if="enablePin && pinedEventsList.length > 0"
-      :pinedMessages="pinedEventsList"
-      @unpin-event="unpinMessage"
-    />
-    <chip-widget
-      :total_events="totalEvents"
-      @event-filter-change="setFiltedEventTypes"
-    />
-    <message-card-list
-      class="list"
-      :messages="messagesOnPage"
-      @pin-event="pinMessage"
-    />
-    <v-pagination
-      class="pagi"
-      v-model="pagi.page"
-      :length="totalPages"
-      rounded="circle"
-      :total-visible="pagi.visible"
-    ></v-pagination>
+  <div>
+    <v-card :theme="main_theme" class="card">
+      <top-widget
+        :main_theme="main_theme"
+        @change-theme="$emit('change-theme')"
+        @change-size="$emit('fold')"
+        @change-settings="showSettings"
+        @screen-info="showScreenInfo"
+      />
+      <buttons-widget />
+      <message-pin-list
+        v-if="enablePin && pinedEventsList.length > 0"
+        :pinedMessages="pinedEventsList"
+        @unpin-event="unpinMessage"
+      />
+      <message-list
+        class="list"
+        :list_messages="messages"
+        :event_per_page="eventPerPage"
+        :pined_messages="pinedEventsList"
+        @pin-event="pinMessage"
+      />
+      <!-- <message-list :list_messages="messages" /> -->
+      <screen-info-widget
+        v-if="dispScreenInfo"
+        class="info-widget"
+        :bar_ratio="bar_ratio"
+        :screen_width="screen_width"
+        :screen_height="screen_height"
+        :width="width"
+        :height="height"
+      />
+      <bottom-info class="bottom-widget" />
+    </v-card>
 
-    <!-- <message-list :list_messages="messages" /> -->
-    <!-- <message-list :list_messages="messages" /> -->
-    <screen-info-widget
-      v-if="dispScreenInfo"
-      class="info-widget"
-      :bar_ratio="bar_ratio"
-      :screen_width="screen_width"
-      :screen_height="screen_height"
-      :width="width"
-      :height="height"
+    <v-overlay
+      v-model="showOverlay"
+      z-index="2"
+      :close-on-content-click="false"
+    >
+    </v-overlay>
+    <setting-widget
+      v-if="dispSettings"
+      :theme="main_theme"
+      :events_per_page="eventPerPage"
+      :enable_pin="enablePin"
+      @close-settings="dispSettings = false"
+      @events-per-page="setEventsPerPage"
+      @enable-pin-function="enablePinMessage"
     />
-    <bottom-info class="bottom-widget" />
-  </v-card>
-
-  <v-overlay v-model="showOverlay" z-index="2" :close-on-content-click="false">
-  </v-overlay>
-  <setting-widget
-    v-if="dispSettings"
-    :theme="main_theme"
-    :events_per_page="pagi.perPage"
-    :enable_pin="enablePin"
-    @close-settings="dispSettings = false"
-    @events-per-page="setEventsPerPage"
-    @enable-pin-function="enablePinMessage"
-  />
+  </div>
 </template>
 
 <script lang="ts">
@@ -69,13 +64,8 @@ import BottomInfo from './BottomInfo.vue';
 import SettingWidget from './SettingWidget.vue';
 import ChipWidget from './ChipWidget.vue';
 
-interface pagination {
-  page: number;
-  perPage: number;
-  visible: number;
-}
-
 export default {
+  emits: ['change-theme', 'fold'],
   components: {
     MessageCardList,
     MessagePinList,
@@ -127,7 +117,7 @@ export default {
   data(): {
     dispScreenInfo: boolean;
     dispSettings: boolean;
-    pagi: pagination;
+    eventPerPage: number;
     filtedEventTypes: string[];
     pinedEventsList: Message[];
     enablePin: boolean;
@@ -135,65 +125,32 @@ export default {
     return {
       dispScreenInfo: false,
       dispSettings: false,
-      pagi: {
-        page: 1,
-        perPage: 10,
-        visible: 4,
-      },
+      eventPerPage: 10,
       filtedEventTypes: [],
       pinedEventsList: [],
       enablePin: false,
     };
   },
   computed: {
-    displayMessages(): Message[] {
-      return this.messages.filter(
-        (m: Message) =>
-          !this.filtedEventTypes.includes(m.Type) &&
-          !this.pinedEventsList.includes(m)
-      );
-    },
-    messagesOnPage(): Message[] {
-      return this.displayMessages.slice(
-        (this.pagi.page - 1) * this.pagi.perPage,
-        this.pagi.page * this.pagi.perPage
-      );
-    },
-    totalEvents(): number {
-      return this.displayMessages.length;
-    },
-    totalPages(): number {
-      if (this.displayMessages.length > 0) {
-        return Math.ceil(this.displayMessages.length / this.pagi.perPage);
-      }
-      return 0;
-    },
     showOverlay(): boolean {
       return this.dispSettings;
     },
   },
   methods: {
+    unpinedMessages(): Message[] {
+      return this.messages.filter(
+        (m: Message) => !this.pinedEventsList.includes(m)
+      );
+    },
     showScreenInfo() {
       this.dispScreenInfo = !this.dispScreenInfo;
     },
     showSettings() {
       this.dispSettings = !this.dispSettings;
     },
-    setFiltedEventTypes(type: string, value: boolean) {
-      if (!value) {
-        if (!this.filtedEventTypes.includes(type)) {
-          this.filtedEventTypes.push(type);
-        }
-      } else {
-        const index = this.filtedEventTypes.indexOf(type);
-        if (index > -1) {
-          this.filtedEventTypes.splice(index, 1);
-        }
-      }
-    },
     setEventsPerPage(num: number) {
       if (num > 0) {
-        this.pagi.perPage = num;
+        this.eventPerPage = num;
       }
     },
     enablePinMessage(enable: boolean) {
@@ -215,7 +172,7 @@ export default {
         //add pined info for one event message
         this.pinedEventsList.push(m);
       }
-      this.setEventsPerPage(this.pagi.perPage - 1);
+      this.setEventsPerPage(this.eventPerPage - 1);
     },
     unpinMessage(m: Message) {
       const index = this.pinedEventsList.findIndex(
@@ -224,7 +181,7 @@ export default {
       if (index > -1) {
         this.pinedEventsList.splice(index, 1);
       }
-      this.setEventsPerPage(this.pagi.perPage + 1);
+      this.setEventsPerPage(this.eventPerPage + 1);
     },
   },
 };
@@ -254,9 +211,5 @@ export default {
   right: 0;
   left: 0;
   bottom: 55px;
-}
-
-.pagi {
-  flex: 0 1 50px;
 }
 </style>

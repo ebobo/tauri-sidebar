@@ -26,8 +26,8 @@ export default {
     },
   },
   methods: {
-    emitPin(id: string, system: string) {
-      this.$emit('pin-event', id, system);
+    emitPin(m: Message) {
+      this.$emit('pin-event', m);
     },
   },
 };

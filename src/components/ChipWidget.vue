@@ -49,6 +49,7 @@
 
 <script lang="ts">
 export default {
+  emits: ['event-filter-change'],
   data() {
     return {
       messageFilter: [0, 1, 2],

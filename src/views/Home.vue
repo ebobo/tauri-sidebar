@@ -1,9 +1,9 @@
 <template>
-  <v-app class="app-area">
+  <v-app>
     <side-bar
       v-if="!smallSideBarOpen"
-      :main_theme="theme"
       class="fill-height"
+      :main_theme="theme"
       :width="windowWidth"
       :height="windowHeight"
       :screen_width="screenWidth"
@@ -94,9 +94,7 @@ export default {
     connectSSE() {
       if (this.event_source === null) {
         this.event_source = new EventSource('http://localhost:5005/stream');
-
-        console.log('connect to sse');
-
+        // console.log('connect to sse');
         this.event_source.addEventListener('clear', (event: MessageEvent) => {
           const data = event.data;
           console.log(data);
@@ -104,10 +102,8 @@ export default {
             this.eventMessgaes = [];
           }
         });
-
         this.event_source.addEventListener('message', (event: MessageEvent) => {
           const data = JSON.parse(event.data);
-          console.log('add event : ', data.length);
           this.eventMessgaes = this.eventMessgaes.concat(data);
         });
       }

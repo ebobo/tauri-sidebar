@@ -85,6 +85,7 @@ interface parameters {
 }
 
 export default {
+  emits: ['pin-event'],
   props: {
     message: {
       required: false,

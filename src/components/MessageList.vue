@@ -4,11 +4,16 @@
       :total_events="totalEvents"
       @event-filter-change="setFiltedEventTypes"
     />
-    <message-card-list class="list" :messages="messagesOnPage" />
+    <message-card-list
+      class="list"
+      :messages="messagesOnPage"
+      @pin-event="pinEvent"
+    />
     <v-pagination
       class="pagi"
       v-model="pagi.page"
       :length="totalPages"
+      size="small"
       rounded="circle"
       :total-visible="pagi.visible"
     ></v-pagination>
@@ -22,7 +27,6 @@ import { Message } from '../data/test';
 
 interface pagination {
   page: number;
-  perPage: number;
   visible: number;
 }
 
@@ -37,6 +41,16 @@ export default {
       type: Array as () => Message[],
       default: [],
     },
+    pined_messages: {
+      required: false,
+      type: Array as () => Message[],
+      default: [],
+    },
+    event_per_page: {
+      required: false,
+      type: Number,
+      default: 10,
+    },
   },
   data(): {
     pagi: pagination;
@@ -45,7 +59,6 @@ export default {
     return {
       pagi: {
         page: 1,
-        perPage: 10,
         visible: 4,
       },
       filtedEventTypes: [],
@@ -54,13 +67,15 @@ export default {
   computed: {
     displayMessages(): Message[] {
       return this.list_messages.filter(
-        (m: Message) => !this.filtedEventTypes.includes(m.Type)
+        (m: Message) =>
+          !this.filtedEventTypes.includes(m.Type) &&
+          !this.pined_messages.includes(m)
       );
     },
     messagesOnPage(): Message[] {
       return this.displayMessages.slice(
-        (this.pagi.page - 1) * this.pagi.perPage,
-        this.pagi.page * this.pagi.perPage
+        (this.pagi.page - 1) * this.event_per_page,
+        this.pagi.page * this.event_per_page
       );
     },
     totalEvents(): number {
@@ -68,7 +83,7 @@ export default {
     },
     totalPages(): number {
       if (this.displayMessages.length > 0) {
-        return Math.ceil(this.displayMessages.length / this.pagi.perPage);
+        return Math.ceil(this.displayMessages.length / this.event_per_page);
       }
       return 0;
     },
@@ -86,10 +101,9 @@ export default {
         }
       }
     },
-    setEventsPerPage(num: number) {
-      if (num > 0) {
-        this.pagi.perPage = num;
-      }
+
+    pinEvent(m: Message) {
+      this.$emit('pin-event', m);
     },
   },
 };
@@ -103,20 +117,11 @@ export default {
 .main {
   display: flex;
   flex-flow: column;
-  height: 50%;
-  background-color: aquamarine;
 }
 
 .list {
   flex: 1 1 100px;
-  background-color: pink;
-}
-
-.info-widget {
-  position: absolute;
-  right: 0;
-  left: 0;
-  bottom: 55px;
+  // background-color: pink;
 }
 
 .pagi {
