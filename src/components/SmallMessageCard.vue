@@ -1,11 +1,11 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="2" xs="4" class="icon-area fill-height" align-self="center">
+      <v-col cols="2" xs="4" class="icon-area fill-height">
         <v-badge icon="mdi-pin-outline" color="grey-lighten-1" v-if="pined">
           <v-icon
             :color="cardParameters.mainColor"
-            size="x-large"
+            size="large"
             @click="pinEvent"
           >
             {{ cardParameters.mainIcon }}</v-icon
@@ -13,7 +13,7 @@
         >
         <v-icon
           :color="cardParameters.mainColor"
-          size="x-large"
+          size="large"
           @click="pinEvent"
           v-if="!pined"
         >
@@ -32,36 +32,29 @@
           <v-label class="text-subtitle-2">
             {{ message.System + ': ' + message.UnitId }}
           </v-label>
-          <!-- <v-badge
-          class="ml-4"
-          color="red-darken-2"
-          dark
-          content="alarm"
-          inline
-        ></v-badge> -->
         </v-row>
-        <v-row class="mt-3">
-          <p class="text-body-2 font-italic">
+        <v-row class="mt-4 mb-0" v-if="opened">
+          <p class="text-body-2">
             {{ 'Alarm: ' + message.UnitId + ' on loop 1 is activated.' }}
           </p>
         </v-row>
       </v-col>
-      <v-col
-        cols="2"
-        xs="4"
-        class="fill-height btn-area"
-        align-self="center"
-        align="center"
-      >
+      <v-col cols="2" xs="4" class="btn-area" align="center">
         <v-btn
           :variant="cardParameters.btnVariant"
-          size="small"
+          size="x-small"
           icon
           @click="acknowledge"
         >
-          <v-icon size="large" color="grey-darken-1">{{
-            cardParameters.ackIcon
-          }}</v-icon>
+          <v-icon color="grey-darken-1">{{ cardParameters.ackIcon }}</v-icon>
+        </v-btn>
+        <v-btn
+          size="x-small"
+          :variant="cardParameters.btnVariant"
+          icon
+          @click="openDetail"
+        >
+          <v-icon color="grey-darken-1">{{ cardParameters.detailIcon }}</v-icon>
         </v-btn>
       </v-col>
     </v-row>
@@ -79,12 +72,18 @@ import { State } from '../data/test';
 interface parameters {
   mainIcon: string;
   ackIcon: string;
+  detailIcon: string;
   mainColor: string;
   dividerColor: string;
   btnVariant: string;
 }
 
 export default {
+  data() {
+    return {
+      opened: false,
+    };
+  },
   props: {
     message: {
       required: false,
@@ -121,6 +120,9 @@ export default {
     },
     pinEvent() {
       this.$emit('pin-event');
+    },
+    openDetail() {
+      this.opened = !this.opened;
     },
   },
   computed: {
@@ -164,6 +166,7 @@ export default {
     cardParameters(): parameters {
       let para = {
         mainIcon: 'mdi-help-circle-outline',
+        detailIcon: this.opened ? 'mdi-menu-up' : 'mdi-menu-down',
         mainColor: 'grey-darken-2',
         ackIcon: 'mdi-account-question-outline',
         btnVariant: 'flat',
@@ -234,13 +237,20 @@ export default {
 }
 .icon-area {
   min-width: min-content;
-  /* background-color: #0f9b0f; */
+  padding: 0;
+  padding-top: 10px;
+  padding-left: 8px;
 }
 .content {
   background-color: #eef7fc;
 }
 .btn-area {
   min-width: min-content;
-  /* background-color: #9525b1; */
+  padding: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.main-area {
+  height: 50px;
 }
 </style>

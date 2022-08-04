@@ -11,6 +11,7 @@ export enum State {
   FaultAck = 'FaultAck',
   FaultOK = 'FaultOK',
   Unknow = 'Unknow',
+  UnknowAck = 'UnknowAck',
 }
 
 export interface Message {

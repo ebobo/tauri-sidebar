@@ -11,10 +11,12 @@
 
 <script lang="ts">
 import MessageCard from './MessageCard.vue';
+import SmallMessageCard from './SmallMessageCard.vue';
 import { Message } from '../data/test';
 export default {
   components: {
     MessageCard,
+    SmallMessageCard,
   },
   props: {
     messages: {

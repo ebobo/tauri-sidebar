@@ -22,6 +22,7 @@
       :messages="messagesOnPage"
       @pin-event="pinMessage"
     />
+
     <v-pagination
       class="pagi"
       v-model="pagi.page"
