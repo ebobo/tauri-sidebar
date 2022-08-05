@@ -1,20 +1,20 @@
 <template>
   <v-list class="card-list">
-    <message-card
+    <compact-message-card
       v-for="m in messages"
       :key="m.UnitId"
       :message="m"
       @pin-event="$emit('pin-event', m)"
-    ></message-card>
+    ></compact-message-card>
   </v-list>
 </template>
 
 <script lang="ts">
-import MessageCard from './MessageCard.vue';
+import CompactMessageCard from './CompactMessageCard.vue';
 import { Message } from '../data/test';
 export default {
   components: {
-    MessageCard,
+    CompactMessageCard,
   },
   props: {
     messages: {

@@ -19,6 +19,7 @@
         :list_messages="messages"
         :event_per_page="enableSplit ? eventPerWindow : eventPerPage"
         :pined_messages="pinedEventsList"
+        :compact_card="enableSplit"
         @pin-event="pinMessage"
       />
       <message-list
@@ -27,6 +28,7 @@
         :list_messages="messages"
         :event_per_page="eventPerWindow"
         :pined_messages="pinedEventsList"
+        :compact_card="enableSplit"
         @pin-event="pinMessage"
       />
       <screen-info-widget
@@ -134,7 +136,7 @@ export default {
       dispScreenInfo: false,
       dispSettings: false,
       eventPerPage: 10,
-      eventPerWindow: 5,
+      eventPerWindow: 8,
       filtedEventTypes: [],
       pinedEventsList: [],
       enablePin: false,

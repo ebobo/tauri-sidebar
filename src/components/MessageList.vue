@@ -5,6 +5,13 @@
       @event-filter-change="setFiltedEventTypes"
     />
     <message-card-list
+      v-if="!compact_card"
+      class="list"
+      :messages="messagesOnPage"
+      @pin-event="pinEvent"
+    />
+    <compact-message-card-list
+      v-if="compact_card"
       class="list"
       :messages="messagesOnPage"
       @pin-event="pinEvent"
@@ -22,6 +29,7 @@
 
 <script lang="ts">
 import MessageCardList from './MessageCardList.vue';
+import CompactMessageCardList from './CompactMessageCardList.vue';
 import ChipWidget from './ChipWidget.vue';
 import { Message } from '../data/test';
 
@@ -33,6 +41,7 @@ interface pagination {
 export default {
   components: {
     MessageCardList,
+    CompactMessageCardList,
     ChipWidget,
   },
   props: {
@@ -50,6 +59,11 @@ export default {
       required: false,
       type: Number,
       default: 10,
+    },
+    compact_card: {
+      required: false,
+      type: Boolean,
+      default: false,
     },
   },
   data(): {

@@ -79,6 +79,7 @@ interface parameters {
 }
 
 export default {
+  emits: ['pin-event'],
   data() {
     return {
       opened: false,
@@ -239,7 +240,7 @@ export default {
   min-width: min-content;
   padding: 0;
   padding-top: 10px;
-  padding-left: 8px;
+  padding-left: 10px;
 }
 .content {
   background-color: #eef7fc;
