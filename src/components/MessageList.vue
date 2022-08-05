@@ -3,6 +3,7 @@
     <chip-widget
       :total_events="totalEvents"
       @event-filter-change="setFiltedEventTypes"
+      @event-sorting-change="setSortingOrder"
     />
     <message-card-list
       v-if="!compact_card"
@@ -60,6 +61,11 @@ export default {
       type: Number,
       default: 10,
     },
+    message_sorting: {
+      required: false,
+      type: String,
+      default: 'timestamp',
+    },
     compact_card: {
       required: false,
       type: Boolean,
@@ -69,6 +75,7 @@ export default {
   data(): {
     pagi: pagination;
     filtedEventTypes: string[];
+    ascending: Boolean;
   } {
     return {
       pagi: {
@@ -76,16 +83,33 @@ export default {
         visible: 4,
       },
       filtedEventTypes: [],
+      ascending: true,
     };
   },
   computed: {
     displayMessages(): Message[] {
-      return this.list_messages.filter(
+      let messages = this.list_messages.filter(
         (m: Message) =>
           !this.filtedEventTypes.includes(m.Type) &&
           !this.pined_messages.includes(m)
       );
+
+      return messages.sort((a: Message, b: Message) => {
+        if (this.ascending) {
+          return (
+            new Date(a.Timestamp).valueOf() - new Date(b.Timestamp).valueOf()
+          );
+        }
+        return (
+          new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf()
+        );
+      });
     },
+
+    sortByDate(a: Message, b: Message): number {
+      return new Date(a.Timestamp).valueOf() - new Date(b.Timestamp).valueOf();
+    },
+
     messagesOnPage(): Message[] {
       return this.displayMessages.slice(
         (this.pagi.page - 1) * this.event_per_page,
@@ -115,7 +139,11 @@ export default {
         }
       }
     },
-
+    setSortingOrder(asc: boolean) {
+      if (this.ascending != asc) {
+        this.ascending = asc;
+      }
+    },
     pinEvent(m: Message) {
       this.$emit('pin-event', m);
     },

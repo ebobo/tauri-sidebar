@@ -51,6 +51,7 @@
       :events_per_window="eventPerWindow"
       :enable_pin="enablePin"
       :enable_split="enableSplit"
+      :message_sorting="messageSorting"
       @close-settings="dispSettings = false"
       @events-per-page="setEventsPerPage"
       @events-per-window="setEventsPerWindow"
@@ -131,6 +132,7 @@ export default {
     pinedEventsList: Message[];
     enablePin: boolean;
     enableSplit: boolean;
+    messageSorting: string;
   } {
     return {
       dispScreenInfo: false,
@@ -141,6 +143,7 @@ export default {
       pinedEventsList: [],
       enablePin: false,
       enableSplit: false,
+      messageSorting: 'timestamp',
     };
   },
   computed: {

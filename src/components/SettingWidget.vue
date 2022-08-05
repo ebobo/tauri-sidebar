@@ -72,10 +72,22 @@
     <v-divider></v-divider>
 
     <!-- Sorting -->
-    <v-label class="subtitle">Sorting</v-label>
-    <v-card-actions>
-      <!-- <v-btn color="primary" text @click="dispSettings = false"> Close </v-btn> -->
-    </v-card-actions>
+    <v-label class="subtitle-tight">Sorting</v-label>
+    <div class="sub-row" justify="center">
+      <v-btn-toggle
+        rounded="md"
+        variant="outlined"
+        class="btn-group"
+        v-model="message_sorting"
+        tile
+        color="#82b1ff"
+        group
+      >
+        <v-btn value="timestamp"> Timestamp </v-btn>
+        <v-btn value="status"> Status </v-btn>
+      </v-btn-toggle>
+    </div>
+    <v-divider></v-divider>
   </v-card>
 </template>
 
@@ -109,6 +121,10 @@ export default {
     events_per_window: {
       required: true,
       type: Number,
+    },
+    message_sorting: {
+      required: true,
+      type: String,
     },
   },
   watch: {
@@ -184,6 +200,10 @@ export default {
   font-size: x-large;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+.btn-group {
+  height: 40px;
+  margin-bottom: 0.5rem;
 }
 
 .sub-row {

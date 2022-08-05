@@ -4,8 +4,11 @@
       <v-chip size="small" class="ml-6">{{ total_events }}</v-chip>
       <v-chip
         size="small"
-        append-icon="mdi-sort-alphabetical-descending"
+        :append-icon="
+          ascendingSort ? 'mdi-sort-bool-ascending' : 'mdi-sort-bool-descending'
+        "
         class="ml-1"
+        @click="changeSorting"
         >Sort</v-chip
       >
       <v-spacer />
@@ -49,10 +52,11 @@
 
 <script lang="ts">
 export default {
-  emits: ['event-filter-change'],
+  emits: ['event-filter-change', 'event-sorting-change'],
   data() {
     return {
       messageFilter: [0, 1, 2],
+      ascendingSort: true,
     };
   },
   props: {
@@ -65,6 +69,10 @@ export default {
   methods: {
     filterChanged(e: any, name: string) {
       this.$emit('event-filter-change', name, e.value);
+    },
+    changeSorting() {
+      this.ascendingSort = !this.ascendingSort;
+      this.$emit('event-sorting-change', this.ascendingSort);
     },
   },
 };
