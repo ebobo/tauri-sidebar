@@ -43,12 +43,32 @@
     <v-label class="subtitle-tight">Split window</v-label>
     <v-switch
       class="center-switch"
-      v-model="enable_spilt"
+      v-model="enable_split"
       color="#1E88E5"
       hide-details
       inset
-      :label="`${enable_spilt ? 'on' : 'off'}`"
+      :label="`${enable_split ? 'on' : 'off'}`"
     ></v-switch>
+    <v-divider></v-divider>
+
+    <v-label class="subtitle-tight">Events per window</v-label>
+    <div class="sub-row" justify="center">
+      <v-btn
+        :disabled="!enable_split"
+        size="small"
+        variant="text"
+        icon="mdi-minus"
+        @click="addEventsPerWindow(false)"
+      ></v-btn>
+      <v-label class="num-disp">{{ events_per_window }}</v-label>
+      <v-btn
+        :disabled="!enable_split"
+        size="small"
+        variant="text"
+        icon="mdi-plus"
+        @click="addEventsPerWindow(true)"
+      ></v-btn>
+    </div>
     <v-divider></v-divider>
 
     <!-- Sorting -->
@@ -61,6 +81,13 @@
 
 <script lang="ts">
 export default {
+  emits: [
+    'close-settings',
+    'enable-pin-function',
+    'events-per-page',
+    'enable-split-window',
+    'events-per-window',
+  ],
   props: {
     main_theme: {
       required: false,
@@ -75,19 +102,21 @@ export default {
       required: true,
       type: Boolean,
     },
-    enable_spilt: {
+    enable_split: {
       required: true,
       type: Boolean,
     },
+    events_per_window: {
+      required: true,
+      type: Number,
+    },
   },
-  //   data() {
-  //     return {
-  //       eventsPerPage: 10,
-  //     };
-  //   },
   watch: {
     enable_pin(newValue: boolean) {
       this.$emit('enable-pin-function', newValue);
+    },
+    enable_split(newValue: boolean) {
+      this.$emit('enable-split-window', newValue);
     },
   },
   methods: {
@@ -103,6 +132,19 @@ export default {
         }
       }
       this.$emit('events-per-page', numberEvents);
+    },
+    addEventsPerWindow(plusOne: boolean) {
+      let numberEvents = this.events_per_window;
+      if (plusOne) {
+        if (numberEvents < 49) {
+          numberEvents++;
+        }
+      } else {
+        if (numberEvents > 1) {
+          numberEvents--;
+        }
+      }
+      this.$emit('events-per-window', numberEvents);
     },
   },
 };

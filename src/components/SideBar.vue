@@ -17,11 +17,18 @@
       <message-list
         class="list"
         :list_messages="messages"
-        :event_per_page="eventPerPage"
+        :event_per_page="enableSplit ? eventPerWindow : eventPerPage"
         :pined_messages="pinedEventsList"
         @pin-event="pinMessage"
       />
-      <!-- <message-list :list_messages="messages" /> -->
+      <message-list
+        v-if="enableSplit"
+        class="list"
+        :list_messages="messages"
+        :event_per_page="eventPerWindow"
+        :pined_messages="pinedEventsList"
+        @pin-event="pinMessage"
+      />
       <screen-info-widget
         v-if="dispScreenInfo"
         class="info-widget"
@@ -34,20 +41,19 @@
       <bottom-info class="bottom-widget" />
     </v-card>
 
-    <v-overlay
-      v-model="showOverlay"
-      z-index="2"
-      :close-on-content-click="false"
-    >
-    </v-overlay>
+    <v-overlay v-model="showOverlay" z-index="2"> </v-overlay>
     <setting-widget
       v-if="dispSettings"
       :theme="main_theme"
       :events_per_page="eventPerPage"
+      :events_per_window="eventPerWindow"
       :enable_pin="enablePin"
+      :enable_split="enableSplit"
       @close-settings="dispSettings = false"
       @events-per-page="setEventsPerPage"
+      @events-per-window="setEventsPerWindow"
       @enable-pin-function="enablePinMessage"
+      @enable-split-window="enableSplitWindow"
     />
   </div>
 </template>
@@ -118,17 +124,21 @@ export default {
     dispScreenInfo: boolean;
     dispSettings: boolean;
     eventPerPage: number;
+    eventPerWindow: number;
     filtedEventTypes: string[];
     pinedEventsList: Message[];
     enablePin: boolean;
+    enableSplit: boolean;
   } {
     return {
       dispScreenInfo: false,
       dispSettings: false,
       eventPerPage: 10,
+      eventPerWindow: 5,
       filtedEventTypes: [],
       pinedEventsList: [],
       enablePin: false,
+      enableSplit: false,
     };
   },
   computed: {
@@ -151,6 +161,11 @@ export default {
     setEventsPerPage(num: number) {
       if (num > 0) {
         this.eventPerPage = num;
+      }
+    },
+    setEventsPerWindow(num: number) {
+      if (num > 0) {
+        this.eventPerWindow = num;
       }
     },
     enablePinMessage(enable: boolean) {
@@ -182,6 +197,12 @@ export default {
         this.pinedEventsList.splice(index, 1);
       }
       this.setEventsPerPage(this.eventPerPage + 1);
+    },
+
+    enableSplitWindow(enable: boolean) {
+      if (this.enableSplit != enable) {
+        this.enableSplit = enable;
+      }
     },
   },
 };
