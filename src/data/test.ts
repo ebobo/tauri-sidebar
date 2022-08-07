@@ -23,6 +23,7 @@ export interface Message {
   Timestamp: string;
   Acknowledged: boolean;
   Content?: string;
+  AutoPined?: boolean;
 }
 
 export const TestMessages: Message[] = [

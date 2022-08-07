@@ -56,6 +56,7 @@
       @events-per-page="setEventsPerPage"
       @events-per-window="setEventsPerWindow"
       @enable-pin-function="enablePinMessage"
+      @enable-auto-pin="enableAutoPinMessage"
       @enable-split-window="enableSplitWindow"
     />
   </div>
@@ -131,6 +132,7 @@ export default {
     filtedEventTypes: string[];
     pinedEventsList: Message[];
     enablePin: boolean;
+    enableAutoPin: boolean;
     enableSplit: boolean;
     messageSorting: string;
   } {
@@ -142,9 +144,46 @@ export default {
       filtedEventTypes: [],
       pinedEventsList: [],
       enablePin: false,
+      enableAutoPin: false,
       enableSplit: false,
       messageSorting: 'timestamp',
     };
+  },
+  watch: {
+    messages(newList: Message[]) {
+      if (newList.length < 1) {
+        this.pinedEventsList = [];
+        return;
+      }
+      if (this.pinedEventsList.length > 0) {
+        const removeList: Message[] = [];
+        this.pinedEventsList.forEach((m: Message, i: number) => {
+          if (m.AutoPined) {
+            removeList.push(m);
+          } else {
+            const index = newList.findIndex(
+              (event: Message) =>
+                event.UnitId === m.UnitId && event.Type === m.Type
+            );
+            // can not find this message in new message list add to remove list
+            if (index === -1) {
+              removeList.push(m);
+            }
+          }
+        });
+        removeList.forEach((m) => {
+          this.unpinMessage(m);
+        });
+        if (this.enableAutoPin) {
+          if (newList.length > 1) {
+            newList[newList.length - 1].AutoPined = true;
+            this.pinedEventsList.unshift(newList[newList.length - 1]);
+          }
+          newList[0].AutoPined = true;
+          this.pinedEventsList.unshift(newList[0]);
+        }
+      }
+    },
   },
   computed: {
     showOverlay(): boolean {
@@ -178,6 +217,22 @@ export default {
         this.enablePin = enable;
         if (!enable) {
           this.pinedEventsList = [];
+          this.enableAutoPin = false;
+        }
+      }
+    },
+    enableAutoPinMessage(enable: boolean) {
+      if (this.enableAutoPin != enable) {
+        this.enableAutoPin = enable;
+        if (enable && this.messages.length > 0) {
+          if (this.messages.length > 1) {
+            this.messages[this.messages.length - 1].AutoPined = true;
+            this.pinedEventsList.unshift(
+              this.messages[this.messages.length - 1]
+            );
+          }
+          this.messages[0].AutoPined = true;
+          this.pinedEventsList.unshift(this.messages[0]);
         }
       }
     },

@@ -28,7 +28,7 @@
     <v-divider></v-divider>
 
     <!-- Pin Events -->
-    <v-label class="subtitle-tight">Pin events</v-label>
+    <v-label class="subtitle-tight">Enable pin event</v-label>
     <v-switch
       class="center-switch"
       v-model="enable_pin"
@@ -36,6 +36,19 @@
       hide-details
       inset
       :label="`${enable_pin ? 'on' : 'off'}`"
+    ></v-switch>
+    <v-divider></v-divider>
+
+    <!-- Auto Pin Events -->
+    <v-label class="subtitle-tight">Auto pin</v-label>
+    <v-switch
+      :disabled="!enable_pin"
+      class="center-switch"
+      v-model="enable_auto_pin"
+      color="#1E88E5"
+      hide-details
+      inset
+      :label="`${enable_auto_pin ? 'on' : 'off'}`"
     ></v-switch>
     <v-divider></v-divider>
 
@@ -96,6 +109,7 @@ export default {
   emits: [
     'close-settings',
     'enable-pin-function',
+    'enable-auto-pin',
     'events-per-page',
     'enable-split-window',
     'events-per-window',
@@ -111,6 +125,10 @@ export default {
       type: Number,
     },
     enable_pin: {
+      required: true,
+      type: Boolean,
+    },
+    enable_auto_pin: {
       required: true,
       type: Boolean,
     },
@@ -130,6 +148,9 @@ export default {
   watch: {
     enable_pin(newValue: boolean) {
       this.$emit('enable-pin-function', newValue);
+    },
+    enable_auto_pin(newValue: boolean) {
+      this.$emit('enable-auto-pin', newValue);
     },
     enable_split(newValue: boolean) {
       this.$emit('enable-split-window', newValue);

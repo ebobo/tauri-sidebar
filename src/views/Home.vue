@@ -97,7 +97,6 @@ export default {
         // console.log('connect to sse');
         this.event_source.addEventListener('clear', (event: MessageEvent) => {
           const data = event.data;
-          console.log(data);
           if (data === 'all') {
             this.eventMessgaes = [];
           }
