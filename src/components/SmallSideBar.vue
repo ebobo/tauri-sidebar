@@ -1,114 +1,113 @@
 <template>
   <v-card class="main-area" flat :theme="main_theme">
-    <v-row :style="IconStyle" align="center" justify="center">
-      <img
-        alt="Autronica Logo"
-        class="shrink mt-2"
-        contain
-        :src="mainIconPath"
-        transition="scale-transition"
-        width="50"
-      />
-    </v-row>
-    <v-row class="mt-4 mb-4" align="center" justify="center">
-      <v-btn variant="flat" icon @click="changeTheme">
-        <v-icon>mdi-brightness-4</v-icon>
-      </v-btn>
-    </v-row>
-    <v-row class="mt-4 mb-4" align="center" justify="center">
-      <v-btn variant="flat" icon @click="changeSize">
-        <v-icon>mdi-resize</v-icon>
-      </v-btn>
-    </v-row>
-    <v-row class="mt-5 mb-5" align="center" justify="center">
-      <v-btn class="text-subtitle-2" variant="flat" icon>Operate</v-btn>
-    </v-row>
-    <v-row class="mt-5 mb-5" align="center" justify="center">
-      <v-btn class="text-subtitle-2" icon flat>Reset</v-btn>
-    </v-row>
-    <v-row class="mt-5 mb-5" align="center" justify="center">
-      <v-btn class="text-subtitle-2" icon flat>Ack</v-btn>
-    </v-row>
-    <div class="space"></div>
-    <v-row class="mr-1 mt-10 mb-10" justify="center">
-      <v-badge :content="TotalAlarms" color="red-darken-2">
+    <div class="buttons">
+      <v-row :style="IconStyle" align="center" justify="center">
+        <img
+          alt="Autronica Logo"
+          class="shrink mt-2"
+          contain
+          :src="mainIconPath"
+          transition="scale-transition"
+          width="50"
+        />
+      </v-row>
+      <v-row class="mt-4 mb-4" align="center" justify="center">
+        <v-btn variant="flat" icon @click="changeTheme">
+          <v-icon>mdi-brightness-4</v-icon>
+        </v-btn>
+      </v-row>
+      <v-row class="mt-4 mb-4" align="center" justify="center">
+        <v-btn variant="flat" icon @click="changeSize">
+          <v-icon>mdi-resize</v-icon>
+        </v-btn>
+      </v-row>
+      <v-row class="mt-5 mb-5" align="center" justify="center">
+        <v-btn class="text-subtitle-2" variant="flat" icon>Operate</v-btn>
+      </v-row>
+      <v-row class="mt-5 mb-5" align="center" justify="center">
+        <v-btn class="text-subtitle-2" icon flat>Reset</v-btn>
+      </v-row>
+      <v-row class="mt-5 mb-5" align="center" justify="center">
+        <v-btn class="text-subtitle-2" icon flat>Ack</v-btn>
+      </v-row>
+    </div>
+    <div class="icons">
+      <v-badge class="icon" :content="TotalAlarms" color="red-darken-2">
         <v-icon size="x-large" color="red-darken-2">mdi-alert-octagram</v-icon>
       </v-badge>
-    </v-row>
-    <v-row class="mr-1 mt-10 mb-10" justify="center">
-      <v-badge :content="TotalFaults" color="yellow-darken-3">
+
+      <v-badge class="icon" :content="TotalFaults" color="yellow-darken-3">
         <v-icon size="x-large" color="yellow-darken-3">mdi-alert</v-icon>
       </v-badge>
-    </v-row>
-    <v-row class="mr-1 mt-10 mb-10" justify="center">
-      <v-badge :content="TotalUnknowns" color="grey-darken-2">
+
+      <v-badge class="icon" :content="TotalUnknowns" color="grey-darken-2">
         <v-icon size="x-large" color="grey-darken-2"
           >mdi-help-circle-outline</v-icon
         ></v-badge
       >
-    </v-row>
-    <v-row class="mr-1 mt-10 mb-10" justify="center">
-      <v-badge :content="TotalAckeds" color="green-darken-3">
+
+      <v-badge class="icon" :content="TotalAckeds" color="green-darken-3">
         <v-icon size="x-large" color="green-darken-3"
           >mdi-account-check-outline</v-icon
         ></v-badge
       >
-    </v-row>
-    <div class="space"></div>
+    </div>
 
-    <v-col>
-      <v-row justify="center" class="mt-0">
-        <v-icon>mdi-latitude</v-icon>
-      </v-row>
-      <v-row justify="center">
-        <v-label class="mt-2 text-subtitle-2">63.43°N</v-label>
-      </v-row></v-col
-    >
+    <div class="infos">
+      <v-col>
+        <v-row justify="center" class="mt-0">
+          <v-icon>mdi-latitude</v-icon>
+        </v-row>
+        <v-row justify="center">
+          <v-label class="mt-2 text-subtitle-2">63.43°N</v-label>
+        </v-row></v-col
+      >
 
-    <v-col>
-      <v-row justify="center" class="mt-0">
-        <v-icon>mdi-longitude</v-icon>
-      </v-row>
-      <v-row justify="center">
-        <v-label class="mt-2 text-subtitle-2">10.39°E</v-label>
-      </v-row></v-col
-    >
+      <v-col>
+        <v-row justify="center" class="mt-0">
+          <v-icon>mdi-longitude</v-icon>
+        </v-row>
+        <v-row justify="center">
+          <v-label class="mt-2 text-subtitle-2">10.39°E</v-label>
+        </v-row></v-col
+      >
 
-    <v-col>
-      <v-row justify="center" class="mt-0">
-        <v-icon>mdi-ship-wheel</v-icon>
-      </v-row>
-      <v-row justify="center">
-        <v-label class="mt-2 text-subtitle-2">-85°</v-label>
-      </v-row></v-col
-    >
+      <v-col>
+        <v-row justify="center" class="mt-0">
+          <v-icon>mdi-ship-wheel</v-icon>
+        </v-row>
+        <v-row justify="center">
+          <v-label class="mt-2 text-subtitle-2">-85°</v-label>
+        </v-row></v-col
+      >
 
-    <v-col>
-      <v-row justify="center" class="mt-0">
-        <v-icon>mdi-speedometer</v-icon>
-      </v-row>
-      <v-row justify="center">
-        <v-label class="mt-2 text-subtitle-2">15.3 k</v-label>
-      </v-row></v-col
-    >
+      <v-col>
+        <v-row justify="center" class="mt-0">
+          <v-icon>mdi-speedometer</v-icon>
+        </v-row>
+        <v-row justify="center">
+          <v-label class="mt-2 text-subtitle-2">15.3 k</v-label>
+        </v-row></v-col
+      >
 
-    <v-col>
-      <v-row justify="center" class="mt-0">
-        <v-icon>mdi-weather-windy</v-icon>
-      </v-row>
-      <v-row justify="center">
-        <v-label class="mt-2 text-subtitle-2">12 m/s</v-label>
-      </v-row></v-col
-    >
+      <v-col>
+        <v-row justify="center" class="mt-0">
+          <v-icon>mdi-weather-windy</v-icon>
+        </v-row>
+        <v-row justify="center">
+          <v-label class="mt-2 text-subtitle-2">12 m/s</v-label>
+        </v-row></v-col
+      >
 
-    <v-col>
-      <v-row justify="center" class="mt-0">
-        <v-icon>mdi-windsock</v-icon>
-      </v-row>
-      <v-row justify="center">
-        <v-label class="mt-2 text-subtitle-2">45°</v-label>
-      </v-row></v-col
-    >
+      <v-col>
+        <v-row justify="center" class="mt-0">
+          <v-icon>mdi-windsock</v-icon>
+        </v-row>
+        <v-row justify="center">
+          <v-label class="mt-2 text-subtitle-2">45°</v-label>
+        </v-row></v-col
+      >
+    </div>
   </v-card>
 </template>
 
@@ -217,7 +216,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.space {
-  height: 25px;
+.main-area {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.icons {
+  flex: 1 1 100px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.buttons {
+  flex: 0 1 100px;
+}
+
+.infos {
+  flex: 0 1 100px;
 }
 </style>
