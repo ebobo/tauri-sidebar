@@ -50,6 +50,7 @@
       :events_per_page="eventPerPage"
       :events_per_window="eventPerWindow"
       :enable_pin="enablePin"
+      :enable_auto_pin="enableAutoPin"
       :enable_split="enableSplit"
       :message_sorting="messageSorting"
       @close-settings="dispSettings = false"
@@ -151,10 +152,12 @@ export default {
   },
   watch: {
     messages(newList: Message[]) {
+      //incoming event list is empty
       if (newList.length < 1) {
         this.pinedEventsList = [];
         return;
       }
+      // event list
       if (this.pinedEventsList.length > 0) {
         const removeList: Message[] = [];
         this.pinedEventsList.forEach((m: Message, i: number) => {
@@ -221,21 +224,37 @@ export default {
         }
       }
     },
+
     enableAutoPinMessage(enable: boolean) {
       if (this.enableAutoPin != enable) {
         this.enableAutoPin = enable;
-        if (enable && this.messages.length > 0) {
+        if (!enable) {
+          this.pinedEventsList = this.pinedEventsList.filter(
+            (m: Message) => !m.AutoPined
+          );
+        } else if (enable && this.messages.length > 0) {
           if (this.messages.length > 1) {
-            this.messages[this.messages.length - 1].AutoPined = true;
-            this.pinedEventsList.unshift(
-              this.messages[this.messages.length - 1]
+            const mes = this.messages[this.messages.length - 1];
+            const index = this.pinedEventsList.findIndex(
+              (event: Message) => event === mes
             );
+            mes.AutoPined = true;
+            if (index === -1) {
+              this.pinedEventsList.unshift(mes);
+            }
           }
-          this.messages[0].AutoPined = true;
-          this.pinedEventsList.unshift(this.messages[0]);
+          const mes = this.messages[0];
+          const index = this.pinedEventsList.findIndex(
+            (event: Message) => event === mes
+          );
+          mes.AutoPined = true;
+          if (index === -1) {
+            this.pinedEventsList.unshift(mes);
+          }
         }
       }
     },
+
     pinMessage(m: Message) {
       if (!this.enablePin) {
         return;
@@ -249,6 +268,7 @@ export default {
       }
       this.setEventsPerPage(this.eventPerPage - 1);
     },
+
     unpinMessage(m: Message) {
       const index = this.pinedEventsList.findIndex(
         (event: Message) => event === m
