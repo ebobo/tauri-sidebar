@@ -45,7 +45,6 @@
           >mdi-help-circle-outline</v-icon
         ></v-badge
       >
-
       <v-badge class="icon" :content="TotalAckeds" color="green-darken-3">
         <v-icon size="x-large" color="green-darken-3"
           >mdi-account-check-outline</v-icon

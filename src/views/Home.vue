@@ -94,7 +94,6 @@ export default {
     connectSSE() {
       if (this.event_source === null) {
         this.event_source = new EventSource('http://localhost:5005/stream');
-        // console.log('connect to sse');
         this.event_source.addEventListener('clear', (event: MessageEvent) => {
           const data = event.data;
           if (data === 'all') {
@@ -104,6 +103,9 @@ export default {
         this.event_source.addEventListener('message', (event: MessageEvent) => {
           const data = JSON.parse(event.data);
           this.eventMessgaes = this.eventMessgaes.concat(data);
+        });
+        this.event_source.addEventListener('open', () => {
+          this.eventMessgaes = [];
         });
       }
     },

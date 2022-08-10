@@ -21,6 +21,7 @@ export interface Message {
   System: string;
   Type: State;
   Timestamp: string;
+  Timesvalue: number;
   Acknowledged: boolean;
   Content?: string;
   AutoPined?: boolean;
@@ -34,6 +35,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.Fault,
     Timestamp: '23.05.22-15:42',
+    Timesvalue: 1662619323000,
     Acknowledged: false,
   },
   {
@@ -43,6 +45,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.SilentAlarm,
     Timestamp: '23.05.22-15:43',
+    Timesvalue: 1662619383000,
     Acknowledged: false,
   },
   {
@@ -52,6 +55,7 @@ export const TestMessages: Message[] = [
     System: 'AutroPrime',
     Type: State.Unknow,
     Timestamp: '23.05.22-15:44',
+    Timesvalue: 1662619453000,
     Acknowledged: false,
   },
   {
@@ -61,6 +65,7 @@ export const TestMessages: Message[] = [
     System: 'AutroPrime',
     Type: State.Alarm,
     Timestamp: '23.05.22-15:45',
+    Timesvalue: 1662619553000,
     Acknowledged: false,
   },
   {
@@ -70,6 +75,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.FaultAck,
     Timestamp: '23.05.22-15:48',
+    Timesvalue: 1662619653000,
     Acknowledged: false,
   },
   {
@@ -79,6 +85,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.FaultAck,
     Timestamp: '23.05.22-15:49',
+    Timesvalue: 1662619663000,
     Acknowledged: false,
   },
   {
@@ -88,6 +95,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.EarlyWarning,
     Timestamp: '23.05.22-15:51',
+    Timesvalue: 1662619683000,
     Acknowledged: false,
   },
   {
@@ -97,6 +105,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.SilentAlarm,
     Timestamp: '23.05.22-15:52',
+    Timesvalue: 1662619753000,
     Acknowledged: false,
   },
   {
@@ -106,6 +115,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.PreAlarm,
     Timestamp: '23.05.22-15:53',
+    Timesvalue: 1662619783000,
     Acknowledged: false,
   },
   {
@@ -115,6 +125,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.Fault,
     Timestamp: '23.05.22-15:54',
+    Timesvalue: 1662619803000,
     Acknowledged: false,
   },
   {
@@ -124,6 +135,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.Fault,
     Timestamp: '23.05.22-15:55',
+    Timesvalue: 1662619823000,
     Acknowledged: false,
   },
   {
@@ -133,6 +145,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.FaultAck,
     Timestamp: '23.05.22-15:56',
+    Timesvalue: 1662619843000,
     Acknowledged: false,
   },
   {
@@ -142,6 +155,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.Fault,
     Timestamp: '23.05.22-15:55',
+    Timesvalue: 1662619853000,
     Acknowledged: false,
   },
   {
@@ -151,6 +165,7 @@ export const TestMessages: Message[] = [
     System: 'AutroSafe',
     Type: State.FaultAck,
     Timestamp: '23.05.22-15:56',
+    Timesvalue: 1662619386000,
     Acknowledged: false,
   },
 ];

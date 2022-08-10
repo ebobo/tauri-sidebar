@@ -12,6 +12,7 @@ export default ({ mode }) => {
     img: 'src',
     server: {
       port: process.env.VITE_SERVE_PORT,
+      strictPort: true,
     },
   });
 };

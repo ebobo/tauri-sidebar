@@ -1,6 +1,6 @@
 <template>
-  <v-toolbar color="primary">
-    <v-row align="center">
+  <v-card class="info-card" color="primary">
+    <v-row class="info-row">
       <v-col cols="1">
         <v-row justify="center"> <v-icon>mdi-monitor-screenshot</v-icon></v-row>
       </v-col>
@@ -30,36 +30,52 @@
         </v-row>
       </v-col>
     </v-row>
-  </v-toolbar>
+
+    <v-row class="info-row">
+      <v-col cols="1">
+        <v-row justify="center"> <v-icon>mdi-console-line</v-icon></v-row>
+      </v-col>
+      <v-col>
+        <v-row justify="center">
+          <p class="ml-1 text-subtitle-2">{{ debug_message }}</p>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script lang="ts">
 export default {
   props: {
     width: {
-      required: true,
+      required: false,
       type: Number,
       default: 0,
     },
     height: {
-      required: true,
+      required: false,
       type: Number,
       default: 0,
     },
     screen_width: {
-      required: true,
+      required: false,
       type: Number,
       default: 0,
     },
     screen_height: {
-      required: true,
+      required: false,
       type: Number,
       default: 0,
     },
     bar_ratio: {
-      required: true,
+      required: false,
       type: Number,
       default: 0,
+    },
+    debug_message: {
+      required: false,
+      type: String,
+      default: '',
     },
   },
 
@@ -82,3 +98,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.info-card {
+  padding-top: 20px;
+  padding-right: 15px;
+  padding-left: 15px;
+  border-radius: 0;
+}
+
+.info-row {
+  margin-bottom: 20px;
+}
+</style>

@@ -21,6 +21,7 @@
         :pined_messages="pinedEventsList"
         :compact_card="enableSplit"
         @pin-event="pinMessage"
+        @debug-message="setDebugMessage"
       />
       <message-list
         v-if="enableSplit"
@@ -39,6 +40,7 @@
         :screen_height="screen_height"
         :width="width"
         :height="height"
+        :debug_message="debugMessage"
       />
       <bottom-info class="bottom-widget" />
     </v-card>
@@ -136,6 +138,7 @@ export default {
     enableAutoPin: boolean;
     enableSplit: boolean;
     messageSorting: string;
+    debugMessage: string;
   } {
     return {
       dispScreenInfo: false,
@@ -148,6 +151,7 @@ export default {
       enableAutoPin: false,
       enableSplit: false,
       messageSorting: 'timestamp',
+      debugMessage: '',
     };
   },
   watch: {
@@ -284,6 +288,12 @@ export default {
         this.enableSplit = enable;
       }
     },
+
+    setDebugMessage(m: String) {
+      if (this.debugMessage != m) {
+        this.debugMessage = m;
+      }
+    },
   },
 };
 </script>
@@ -312,5 +322,6 @@ export default {
   right: 0;
   left: 0;
   bottom: 55px;
+  height: 80px;
 }
 </style>

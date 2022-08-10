@@ -93,21 +93,13 @@ export default {
           !this.filtedEventTypes.includes(m.Type) &&
           !this.pined_messages.includes(m)
       );
-
       return messages.sort((a: Message, b: Message) => {
         if (this.ascending) {
-          return (
-            new Date(a.Timestamp).valueOf() - new Date(b.Timestamp).valueOf()
-          );
+          // this.$emit('debug-message', a.Timesvalue);
+          return a.Timesvalue - b.Timesvalue;
         }
-        return (
-          new Date(b.Timestamp).valueOf() - new Date(a.Timestamp).valueOf()
-        );
+        return b.Timesvalue - a.Timesvalue;
       });
-    },
-
-    sortByDate(a: Message, b: Message): number {
-      return new Date(a.Timestamp).valueOf() - new Date(b.Timestamp).valueOf();
     },
 
     messagesOnPage(): Message[] {
