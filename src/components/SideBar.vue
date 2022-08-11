@@ -56,6 +56,7 @@
       :enable_pin="enablePin"
       :enable_auto_pin="enableAutoPin"
       :enable_split="enableSplit"
+      :auto_pin_alarm="autoPinAlarm"
       :message_sorting="messageSorting"
       @close-settings="dispSettings = false"
       @events-per-page="setEventsPerPage"
@@ -63,6 +64,7 @@
       @enable-pin-function="enablePinMessage"
       @enable-auto-pin="enableAutoPinMessage"
       @enable-split-window="enableSplitWindow"
+      @enable-auto-pin-alarm="enableAutoPinAlarm"
     />
   </div>
 </template>
@@ -71,7 +73,7 @@
 import MessageCardList from './MessageCardList.vue';
 import MessagePinList from './MessagePinList.vue';
 import MessageList from './MessageList.vue';
-import { Message } from '../data/test';
+import { Message, State } from '../data/test';
 import TopWidget from './TopWidget.vue';
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import ButtonsWidget from './ButtonsWidget.vue';
@@ -138,6 +140,7 @@ export default {
     pinedEventsList: Message[];
     enablePin: boolean;
     enableAutoPin: boolean;
+    AutoPinAlarm: boolean;
     enableSplit: boolean;
     messageSorting: string;
     debugMessage: string;
@@ -152,6 +155,7 @@ export default {
       pinedEventsList: [],
       enablePin: false,
       enableAutoPin: false,
+      AutoPinAlarm: false,
       enableSplit: false,
       messageSorting: 'timestamp',
       debugMessage: '',
@@ -165,7 +169,7 @@ export default {
         this.pinedEventsList = [];
         return;
       }
-      // event list
+      // event list not empty
       if (this.pinedEventsList.length > 0) {
         const removeList: Message[] = [];
         this.pinedEventsList.forEach((m: Message, i: number) => {
@@ -185,7 +189,11 @@ export default {
         removeList.forEach((m) => {
           this.unpinMessage(m);
         });
+        //Auto pin enabled
         if (this.enableAutoPin) {
+          if (this.autoPinAlarm) {
+            newList = newList.filter((m: Message) => m.Type === State.Alarm);
+          }
           if (newList.length > 1) {
             newList[newList.length - 1].AutoPined = true;
             this.pinedEventsList.unshift(newList[newList.length - 1]);
@@ -233,16 +241,22 @@ export default {
       }
     },
 
-    enableAutoPinMessage(enable: boolean) {
-      if (this.enableAutoPin != enable) {
-        this.enableAutoPin = enable;
-        if (!enable) {
-          this.pinedEventsList = this.pinedEventsList.filter(
-            (m: Message) => !m.AutoPined
-          );
-        } else if (enable && this.messages.length > 0) {
-          if (this.messages.length > 1) {
-            const mes = this.messages[this.messages.length - 1];
+    enableAutoPinAlarm(enable: boolean) {
+      if (this.autoPinAlarm != enable) {
+        this.autoPinAlarm = enable;
+
+        this.pinedEventsList.forEach((m: Message) => (m.AutoPined = false));
+        this.pinedEventsList = [];
+
+        if (this.messages.length > 0) {
+          let filteredMessages = this.messages;
+          if (this.autoPinAlarm) {
+            filteredMessages = this.messages.filter(
+              (m: Message) => m.Type === State.Alarm
+            );
+          }
+          if (filteredMessages.length > 1) {
+            const mes = filteredMessages[filteredMessages.length - 1];
             const index = this.pinedEventsList.findIndex(
               (event: Message) => event === mes
             );
@@ -251,7 +265,43 @@ export default {
               this.pinedEventsList.unshift(mes);
             }
           }
-          const mes = this.messages[0];
+          const mes = filteredMessages[0];
+          const index = this.pinedEventsList.findIndex(
+            (event: Message) => event === mes
+          );
+          mes.AutoPined = true;
+          if (index === -1) {
+            this.pinedEventsList.unshift(mes);
+          }
+        }
+      }
+    },
+
+    enableAutoPinMessage(enable: boolean) {
+      if (this.enableAutoPin != enable) {
+        this.enableAutoPin = enable;
+        if (!enable) {
+          this.pinedEventsList = this.pinedEventsList.filter(
+            (m: Message) => !m.AutoPined
+          );
+        } else if (enable && this.messages.length > 0) {
+          let filteredMessages = this.messages;
+          if (this.autoPinAlarm) {
+            filteredMessages = this.messages.filter(
+              (m: Message) => m.Type === State.Alarm
+            );
+          }
+          if (filteredMessages.length > 1) {
+            const mes = filteredMessages[filteredMessages.length - 1];
+            const index = this.pinedEventsList.findIndex(
+              (event: Message) => event === mes
+            );
+            mes.AutoPined = true;
+            if (index === -1) {
+              this.pinedEventsList.unshift(mes);
+            }
+          }
+          const mes = filteredMessages[0];
           const index = this.pinedEventsList.findIndex(
             (event: Message) => event === mes
           );
@@ -282,6 +332,7 @@ export default {
         (event: Message) => event === m
       );
       if (index > -1) {
+        m.AutoPined = false;
         this.pinedEventsList.splice(index, 1);
       }
       this.setEventsPerPage(this.eventPerPage + 1);

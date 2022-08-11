@@ -43,12 +43,21 @@
     <v-label class="subtitle-tight">Auto pin</v-label>
     <v-switch
       :disabled="!enable_pin"
-      class="center-switch"
+      class="center-top-switch"
       v-model="enable_auto_pin"
       color="#1E88E5"
       hide-details
       inset
       :label="`${enable_auto_pin ? 'on' : 'off'}`"
+    ></v-switch>
+    <v-switch
+      :disabled="!enable_auto_pin"
+      class="center-sub-switch"
+      v-model="auto_pin_alarm"
+      color="#1E88E5"
+      hide-details
+      inset
+      :label="`${auto_pin_alarm ? 'Alarm' : 'Event'}`"
     ></v-switch>
     <v-divider></v-divider>
 
@@ -110,6 +119,7 @@ export default {
     'close-settings',
     'enable-pin-function',
     'enable-auto-pin',
+    'auto-pin-alarm',
     'events-per-page',
     'enable-split-window',
     'events-per-window',
@@ -129,6 +139,10 @@ export default {
       type: Boolean,
     },
     enable_auto_pin: {
+      required: true,
+      type: Boolean,
+    },
+    auto_pin_alarm: {
       required: true,
       type: Boolean,
     },
@@ -152,6 +166,9 @@ export default {
     enable_auto_pin(newValue: boolean) {
       this.$emit('enable-auto-pin', newValue);
     },
+    auto_pin_alarm(newValue: boolean) {
+      this.$emit('enable-auto-pin-alarm', newValue);
+    },
     enable_split(newValue: boolean) {
       this.$emit('enable-split-window', newValue);
     },
@@ -160,7 +177,7 @@ export default {
     addEventsPerPage(plusOne: boolean) {
       let numberEvents = this.events_per_page;
       if (plusOne) {
-        if (numberEvents < 99) {
+        if (numberEvents < 30) {
           numberEvents++;
         }
       } else {
@@ -173,7 +190,7 @@ export default {
     addEventsPerWindow(plusOne: boolean) {
       let numberEvents = this.events_per_window;
       if (plusOne) {
-        if (numberEvents < 49) {
+        if (numberEvents < 15) {
           numberEvents++;
         }
       } else {
@@ -239,6 +256,20 @@ export default {
   justify-content: center;
   margin-left: 1rem;
 }
+
+.center-top-switch {
+  display: flex;
+  justify-content: center;
+  margin-left: 1rem;
+  height: 40px;
+}
+
+.center-sub-switch {
+  display: flex;
+  justify-content: center;
+  margin-left: 40px;
+}
+
 .pink-background {
   background-color: pink;
 }
