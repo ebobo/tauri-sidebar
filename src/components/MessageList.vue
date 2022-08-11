@@ -66,6 +66,11 @@ export default {
       type: String,
       default: 'timestamp',
     },
+    search_keyword: {
+      required: false,
+      type: String,
+      default: '',
+    },
     compact_card: {
       required: false,
       type: Boolean,
@@ -93,6 +98,13 @@ export default {
           !this.filtedEventTypes.includes(m.Type) &&
           !this.pined_messages.includes(m)
       );
+
+      if (this.search_keyword !== '') {
+        messages = messages.filter((m: Message) =>
+          m.UnitId.includes(this.search_keyword)
+        );
+      }
+
       return messages.sort((a: Message, b: Message) => {
         if (this.ascending) {
           // this.$emit('debug-message', a.Timesvalue);

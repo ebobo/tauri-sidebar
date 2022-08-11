@@ -22,6 +22,7 @@
       label="Search"
       single-line
       hide-details
+      v-model="searchItem"
       variant="underlined"
     ></v-text-field>
   </div>
@@ -32,11 +33,18 @@ export default {
   data() {
     return {
       search: false,
+      searchItem: '',
     };
   },
   methods: {
     openSearch() {
+      this.searchItem = '';
       this.search = !this.search;
+    },
+  },
+  watch: {
+    searchItem() {
+      this.$emit('search-item', this.searchItem);
     },
   },
 };

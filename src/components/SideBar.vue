@@ -8,7 +8,7 @@
         @change-settings="showSettings"
         @screen-info="showScreenInfo"
       />
-      <buttons-widget />
+      <buttons-widget @search-item="setSearchKeyword" />
       <message-pin-list
         v-if="enablePin && pinedEventsList.length > 0"
         :pinedMessages="pinedEventsList"
@@ -20,6 +20,7 @@
         :event_per_page="enableSplit ? eventPerWindow : eventPerPage"
         :pined_messages="pinedEventsList"
         :compact_card="enableSplit"
+        :search_keyword="searchKeyword"
         @pin-event="pinMessage"
         @debug-message="setDebugMessage"
       />
@@ -30,6 +31,7 @@
         :event_per_page="eventPerWindow"
         :pined_messages="pinedEventsList"
         :compact_card="enableSplit"
+        :search_keyword="searchKeyword"
         @pin-event="pinMessage"
       />
       <screen-info-widget
@@ -139,6 +141,7 @@ export default {
     enableSplit: boolean;
     messageSorting: string;
     debugMessage: string;
+    searchKeyword: string;
   } {
     return {
       dispScreenInfo: false,
@@ -152,6 +155,7 @@ export default {
       enableSplit: false,
       messageSorting: 'timestamp',
       debugMessage: '',
+      searchKeyword: '',
     };
   },
   watch: {
@@ -292,6 +296,12 @@ export default {
     setDebugMessage(m: String) {
       if (this.debugMessage != m) {
         this.debugMessage = m;
+      }
+    },
+
+    setSearchKeyword(m: String) {
+      if (this.searchKeyword != m) {
+        this.searchKeyword = m;
       }
     },
   },
