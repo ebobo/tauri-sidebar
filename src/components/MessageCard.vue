@@ -25,7 +25,7 @@
           <v-icon color="grey-darken-1" size="sm"
             >mdi-clock-time-nine-outline</v-icon
           >
-          <v-label class="ml-1 mr-2 text-subtitle-2">
+          <v-label class="mr-2 text-subtitle-2">
             {{ message.Timestamp }}
           </v-label>
 
@@ -42,7 +42,9 @@
         </v-row>
         <v-row class="mt-3">
           <p class="text-body-2 font-italic">
-            {{ 'Alarm: ' + message.UnitId + ' on loop 1 is activated.' }}
+            {{
+              message.Type + ': ' + message.UnitId + ' on loop 1 is activated.'
+            }}
           </p>
         </v-row>
       </v-col>
