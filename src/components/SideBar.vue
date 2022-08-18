@@ -58,6 +58,7 @@
       :enable_split="enableSplit"
       :auto_pin_alarm="autoPinAlarm"
       :message_sorting="messageSorting"
+      :server_address="sse_server_address"
       @close-settings="dispSettings = false"
       @events-per-page="setEventsPerPage"
       @events-per-window="setEventsPerWindow"
@@ -65,6 +66,7 @@
       @enable-auto-pin="enableAutoPinMessage"
       @enable-split-window="enableSplitWindow"
       @enable-auto-pin-alarm="enableAutoPinAlarm"
+      @sse-server-address="setSseServerAddress"
     />
   </div>
 </template>
@@ -129,6 +131,11 @@ export default {
       required: true,
       type: String,
       default: 'light',
+    },
+    sse_server_address: {
+      required: false,
+      type: String,
+      default: 'test',
     },
   },
   data(): {
@@ -354,6 +361,10 @@ export default {
       if (this.searchKeyword != m) {
         this.searchKeyword = m;
       }
+    },
+
+    setSseServerAddress(add: String) {
+      this.$emit('change-server-address', add);
     },
   },
 };

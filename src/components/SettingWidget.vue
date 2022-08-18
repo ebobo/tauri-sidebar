@@ -106,8 +106,29 @@
         group
       >
         <v-btn value="timestamp"> Timestamp </v-btn>
-        <v-btn value="status"> Status </v-btn>
+        <v-btn value="order"> Order </v-btn>
       </v-btn-toggle>
+    </div>
+    <v-divider></v-divider>
+
+    <!-- Server Address -->
+    <v-label class="subtitle-tight">Server address</v-label>
+    <div class="sub-row-column">
+      <v-text-field
+        class="ip-editor"
+        v-model="server_address"
+        :rules="rules"
+        variant="underlined"
+        color="#82b1ff"
+      ></v-text-field>
+      <v-btn
+        class="btn-single"
+        variant="tonal"
+        color="#82b1ff"
+        @click="setServerAddress"
+      >
+        Reconnect
+      </v-btn>
     </div>
     <v-divider></v-divider>
   </v-card>
@@ -158,6 +179,10 @@ export default {
       required: true,
       type: String,
     },
+    server_address: {
+      required: true,
+      type: String,
+    },
   },
   watch: {
     enable_pin(newValue: boolean) {
@@ -187,6 +212,7 @@ export default {
       }
       this.$emit('events-per-page', numberEvents);
     },
+
     addEventsPerWindow(plusOne: boolean) {
       let numberEvents = this.events_per_window;
       if (plusOne) {
@@ -199,6 +225,10 @@ export default {
         }
       }
       this.$emit('events-per-window', numberEvents);
+    },
+
+    setServerAddress() {
+      this.$emit('sse-server-address', this.server_address);
     },
   },
 };
@@ -250,6 +280,13 @@ export default {
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
 }
+.sub-row-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
 
 .center-switch {
   display: flex;
@@ -268,6 +305,18 @@ export default {
   display: flex;
   justify-content: center;
   margin-left: 40px;
+}
+
+.ip-editor {
+  width: 210px;
+  height: 60px;
+}
+
+.ip-editor input {
+  text-align: center;
+}
+.btn-single {
+  width: 120px;
 }
 
 .pink-background {

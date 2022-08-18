@@ -10,8 +10,10 @@
       :screen_height="screenHeight"
       :bar_ratio="sideBarScreenRatio"
       :messages="eventMessgaes"
+      :sse_server_address="sseServerAdd"
       @fold="switchBars"
       @change-theme="changeTheme"
+      @change-server-address="changeServerAddress"
     />
     <small-side-bar
       v-if="smallSideBarOpen"
@@ -45,6 +47,7 @@ export default {
     theme: string;
     eventMessgaes: Message[];
     event_source: EventSource | null;
+    sseServerAdd: string;
   } {
     return {
       screenWidth: screen.availWidth,
@@ -56,6 +59,7 @@ export default {
       theme: 'light',
       eventMessgaes: [],
       event_source: null,
+      sseServerAdd: '127.0.0.1:5005/stream',
     };
   },
   created() {
@@ -91,9 +95,20 @@ export default {
       }
     },
 
+    changeServerAddress(add: string) {
+      if (this.sseServerAdd != add && add !== '') {
+        //set new sse address
+        this.sseServerAdd = add;
+        //disconnect from current SSE server
+        this.disconnectSSE();
+        //reconnect to new SSE server
+        this.connectSSE();
+      }
+    },
+
     connectSSE() {
       if (this.event_source === null) {
-        this.event_source = new EventSource('http://localhost:5005/stream');
+        this.event_source = new EventSource('http://' + this.sseServerAdd);
         this.event_source.addEventListener('clear', (event: MessageEvent) => {
           const data = event.data;
           if (data === 'all') {
