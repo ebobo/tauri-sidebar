@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.autronica.sidebar",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -58,8 +58,8 @@
         "fullscreen": false,
         "height": 1080,
         "resizable": true,
-        "title": "sidebar",
-        "width": 420,
+        "title": "Sidebar",
+        "width": 430,
         "decorations": true,
         "minWidth": 68,
         "minHeight": 800
