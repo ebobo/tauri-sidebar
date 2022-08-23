@@ -1,6 +1,6 @@
 <template>
   <v-container class="content">
-    <v-row class="pink-background">
+    <v-row>
       <v-col cols="2" xs="4" class="icon-area fill-height" align-self="center">
         <v-badge icon="mdi-pin-outline" color="grey-lighten-1" v-if="pined">
           <v-icon
@@ -51,7 +51,7 @@
         xs="4"
         class="fill-height btn-area"
         align-self="center"
-        align="center"
+        align="end"
       >
         <v-btn
           :variant="cardParameters.btnVariant"
@@ -241,6 +241,10 @@ export default {
   /* background-color: #eef7fc; */
   padding-top: 0.7rem;
   padding-bottom: 0.7rem;
+}
+
+.pink-background {
+  background-color: pink;
 }
 
 .btn-area {

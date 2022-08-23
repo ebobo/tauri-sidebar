@@ -145,7 +145,7 @@ export default {
               Name: data.message.name,
               Description: data.message.description[0].text,
               Type: data.meta.type,
-              Timestamp: new Date(data.message.time).toLocaleString('no-NO', {
+              Timestamp: new Date(data.message.time).toLocaleString('en-GB', {
                 hour12: false,
               }),
               Timesvalue: data.message.time,
