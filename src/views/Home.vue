@@ -59,7 +59,7 @@ export default {
       theme: 'light',
       eventMessgaes: [],
       event_source: null,
-      sseServerAdd: '127.0.0.1:5005/stream',
+      sseServerAdd: '172.16.1.67:5000/sse/feed',
     };
   },
   created() {
@@ -115,10 +115,30 @@ export default {
             this.eventMessgaes = [];
           }
         });
-        this.event_source.addEventListener('message', (event: MessageEvent) => {
+        // this.event_source.addEventListener('message', (event: MessageEvent) => {
+        //   const data = JSON.parse(event.data);
+        //   this.eventMessgaes = this.eventMessgaes.concat(data);
+        // });
+
+        this.event_source.addEventListener('frakon', (event: MessageEvent) => {
           const data = JSON.parse(event.data);
-          this.eventMessgaes = this.eventMessgaes.concat(data);
+          if (data.meta.codec !== 'alarmMsg') {
+            return;
+          }
+          const system_message = {
+            Name: data.message.name,
+            Description: data.message.description[0].text,
+            Type: data.meta.type,
+            Timestamp: new Date(data.message.time).toLocaleString('no-NO', {
+              hour12: false,
+            }),
+            Timesvalue: data.message.time,
+            Quality: data.meta.quality,
+            Deleted: data.meta.deleted,
+          };
+          this.eventMessgaes = this.eventMessgaes.concat(system_message);
         });
+
         this.event_source.addEventListener('open', () => {
           this.eventMessgaes = [];
         });

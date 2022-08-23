@@ -18,7 +18,7 @@
           color="red-darken-2"
           filter
           outlined
-          @group:selected="filterChanged($event, 'Alarm')"
+          @group:selected="filterChanged($event, 'alarm')"
           >Alarm</v-chip
         >
         <v-chip
@@ -26,7 +26,7 @@
           color="yellow-darken-3"
           filter
           outlined
-          @group:selected="filterChanged($event, 'Fault')"
+          @group:selected="filterChanged($event, 'fault')"
           >Fault</v-chip
         >
         <v-chip
@@ -34,8 +34,8 @@
           color="gray-darken-4"
           filter
           outlined
-          @group:selected="filterChanged($event, 'Unknow')"
-          >Unknown</v-chip
+          @group:selected="filterChanged($event, 'other')"
+          >Other</v-chip
         >
         <!-- <v-chip
           size="small"

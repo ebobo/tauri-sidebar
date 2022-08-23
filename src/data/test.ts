@@ -1,13 +1,13 @@
 export enum State {
-  Quiescent = 'Quiescent',
-  EarlyWarning = 'EarlyWarning',
-  PreAlarm = 'PreAlarm',
-  Alarm = 'Alarm',
-  AlarmAck = 'AlarmAck',
+  Quiescent = 'quiescent',
+  EarlyWarning = 'earlyWarning',
+  PreAlarm = 'preAlarm',
+  Alarm = 'alarm',
+  AlarmAck = 'alarmAck',
   SilentAlarm = 'SilentAlarm',
   SmallAlarm = 'SmallAlarm',
   LargeAlarm = 'LargeAlarm',
-  Fault = 'Fault',
+  Fault = 'fault',
   FaultAck = 'FaultAck',
   FaultOK = 'FaultOK',
   Unknow = 'Unknow',
@@ -15,14 +15,17 @@ export enum State {
 }
 
 export interface Message {
-  UnitId: string;
+  UnitId?: string;
   UnitClass?: string;
   UnitFunc?: string;
-  System: string;
-  Type: State;
-  Timestamp: string;
-  Timesvalue: number;
-  Acknowledged: boolean;
+  Description?: string;
+  Name?: string;
+  System?: string;
+  Type?: State;
+  Timestamp: number;
+  Timesvalue?: number;
+  Acknowledged?: boolean;
+  Deleted?: boolean;
   Content?: string;
   AutoPined?: boolean;
 }

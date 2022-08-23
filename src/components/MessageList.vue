@@ -101,7 +101,7 @@ export default {
 
       if (this.search_keyword !== '') {
         messages = messages.filter((m: Message) =>
-          m.UnitId.includes(this.search_keyword)
+          m.Name.includes(this.search_keyword)
         );
       }
 
@@ -142,6 +142,7 @@ export default {
           this.filtedEventTypes.splice(index, 1);
         }
       }
+      console.log('filter', this.filtedEventTypes);
     },
     setSortingOrder(asc: boolean) {
       if (this.ascending != asc) {

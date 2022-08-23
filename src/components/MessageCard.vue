@@ -30,7 +30,7 @@
           </v-label>
 
           <v-label class="text-subtitle-2">
-            {{ message.System + ': ' + message.UnitId }}
+            {{ message.Name }}
           </v-label>
           <!-- <v-badge
           class="ml-4"
@@ -42,9 +42,7 @@
         </v-row>
         <v-row class="mt-3">
           <p class="text-body-2 font-italic">
-            {{
-              message.Type + ': ' + message.UnitId + ' on loop 1 is activated.'
-            }}
+            {{ message.Description }}
           </p>
         </v-row>
       </v-col>
