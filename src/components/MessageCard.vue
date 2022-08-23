@@ -1,7 +1,7 @@
 <template>
   <v-container class="content">
     <v-row>
-      <v-col cols="2" xs="4" class="icon-area fill-height" align-self="center">
+      <v-col xs="4" class="icon-area" align-self="center">
         <v-badge icon="mdi-pin-outline" color="grey-lighten-1" v-if="pined">
           <v-icon
             :color="cardParameters.mainColor"
@@ -20,12 +20,12 @@
           {{ cardParameters.mainIcon }}</v-icon
         >
       </v-col>
-      <v-col cols="8" xs="4">
+      <v-col xs="4">
         <v-row class="mt-0" align="center">
           <v-icon color="grey-darken-1" size="sm"
             >mdi-clock-time-nine-outline</v-icon
           >
-          <v-label class="mr-2 text-subtitle-2">
+          <v-label class="ml-1 mr-2 text-subtitle-2">
             {{ message.Timestamp }}
           </v-label>
 
@@ -40,18 +40,17 @@
           inline
         ></v-badge> -->
         </v-row>
-        <v-row class="mt-3">
+        <v-row class="mt-3 mb-0">
           <p class="text-body-2 font-italic">
             {{ message.Description }}
           </p>
         </v-row>
       </v-col>
       <v-col
-        cols="2"
         xs="4"
         class="fill-height btn-area"
         align-self="center"
-        align="end"
+        align="center"
       >
         <v-btn
           :variant="cardParameters.btnVariant"
@@ -68,7 +67,7 @@
   </v-container>
   <v-divider
     v-if="!lastOne"
-    inset
+    class="divider"
     :color="cardParameters.dividerColor"
   ></v-divider>
 </template>
@@ -234,21 +233,25 @@ export default {
   border-left: 4px solid v-bind('cardParameters.dividerColor');
 }
 .icon-area {
-  min-width: min-content;
-  /* background-color: #0f9b0f; */
+  /* background-color: #eef7fc; */
+  max-width: min-content;
+  margin-right: 0.2rem;
 }
 .content {
   /* background-color: #eef7fc; */
-  padding-top: 0.7rem;
-  padding-bottom: 0.7rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
 }
 
-.pink-background {
-  background-color: pink;
+.divider {
+  /* background-color: pink; */
+  margin-left: 3.5rem;
 }
 
 .btn-area {
-  min-width: min-content;
+  max-width: min-content;
   /* background-color: #9525b1; */
 }
 </style>
