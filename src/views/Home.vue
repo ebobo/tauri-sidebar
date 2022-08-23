@@ -115,10 +115,6 @@ export default {
             this.eventMessgaes = [];
           }
         });
-        // this.event_source.addEventListener('message', (event: MessageEvent) => {
-        //   const data = JSON.parse(event.data);
-        //   this.eventMessgaes = this.eventMessgaes.concat(data);
-        // });
 
         this.event_source.addEventListener('frakon', (event: MessageEvent) => {
           const data = JSON.parse(event.data);
@@ -126,22 +122,35 @@ export default {
           if (data.meta.codec !== 'alarmMsg') {
             return;
           }
-          // delete message
-          if (data.meta.deleted) {
-            const index = this.eventMessgaes.findIndex(
-              (mes: Message) =>
-                mes.Name === data.message.name &&
-                mes.Type === data.meta.type &&
-                mes.Description === data.message.description[0].text
-            );
-            // find the message in the list
-            if (index > -1) {
+          const messageIndex = this.eventMessgaes.findIndex(
+            (mes: Message) => mes.Key === data.message.key.join('-')
+          );
+
+          // message exist
+          if (messageIndex > -1) {
+            // delete message
+            if (data.meta.deleted) {
               // remove it from list
-              this.eventMessgaes.splice(index, 1);
+              this.eventMessgaes.splice(messageIndex, 1);
+            } else {
+              // update message
+              this.eventMessgaes[messageIndex].Name = data.message.name;
+              this.eventMessgaes[messageIndex].Description =
+                data.message.description[0].text;
+              this.eventMessgaes[messageIndex].Timestamp = new Date(
+                data.message.time
+              ).toLocaleString('en-GB', {
+                hour12: false,
+              });
+              this.eventMessgaes[messageIndex].Timesvalue = data.message.time;
+              this.eventMessgaes[messageIndex].Acknowledged =
+                data.message.value[0].ack.state;
             }
           } else {
             // add new messsage
             const system_message = {
+              Key: data.message.key.join('-'),
+              Tag: data.message.tag,
               Name: data.message.name,
               Description: data.message.description[0].text,
               Type: data.meta.type,
