@@ -22,6 +22,7 @@
         :compact_card="enableSplit"
         :search_keyword="searchKeyword"
         @pin-event="pinMessage"
+        @select-event="selectMessage"
         @debug-message="setDebugMessage"
       />
       <message-list
@@ -82,6 +83,11 @@ import ButtonsWidget from './ButtonsWidget.vue';
 import BottomInfo from './BottomInfo.vue';
 import SettingWidget from './SettingWidget.vue';
 import ChipWidget from './ChipWidget.vue';
+import {
+  eventSelect,
+  eventSelectedRequest,
+  eventSelectedResponse,
+} from '../service/rest';
 
 export default {
   emits: ['change-theme', 'fold'],
@@ -351,20 +357,31 @@ export default {
       }
     },
 
-    setDebugMessage(m: String) {
+    setDebugMessage(m: string) {
       if (this.debugMessage != m) {
         this.debugMessage = m;
       }
     },
 
-    setSearchKeyword(m: String) {
+    setSearchKeyword(m: string) {
       if (this.searchKeyword != m) {
         this.searchKeyword = m;
       }
     },
 
-    setSseServerAddress(add: String) {
+    setSseServerAddress(add: string) {
       this.$emit('change-server-address', add);
+    },
+
+    selectMessage(tag: string) {
+      const data: eventSelectedRequest = {
+        tag,
+      };
+      eventSelect(data)
+        .then()
+        .catch(() => {
+          console.log('error on select');
+        });
     },
   },
 };

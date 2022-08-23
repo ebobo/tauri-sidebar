@@ -20,7 +20,7 @@
           {{ cardParameters.mainIcon }}</v-icon
         >
       </v-col>
-      <v-col xs="4">
+      <v-col xs="4" @click="messageClick">
         <v-row class="mt-0" align="center">
           <v-icon color="grey-darken-1" size="sm"
             >mdi-clock-time-nine-outline</v-icon
@@ -121,6 +121,9 @@ export default {
     },
     pinEvent() {
       this.$emit('pin-event');
+    },
+    messageClick() {
+      this.$emit('select-event');
     },
   },
   computed: {

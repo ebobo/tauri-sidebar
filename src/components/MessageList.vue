@@ -10,6 +10,7 @@
       class="list"
       :messages="messagesOnPage"
       @pin-event="pinEvent"
+      @select-event="selectEvent"
     />
     <compact-message-card-list
       v-if="compact_card"
@@ -151,6 +152,9 @@ export default {
     },
     pinEvent(m: Message) {
       this.$emit('pin-event', m);
+    },
+    selectEvent(tag: String) {
+      this.$emit('select-event', tag);
     },
   },
 };

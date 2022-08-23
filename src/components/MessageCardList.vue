@@ -5,6 +5,7 @@
       :key="m.UnitId"
       :message="m"
       @pin-event="$emit('pin-event', m)"
+      @select-event="$emit('select-event', m.Tag)"
     ></message-card>
   </v-list>
 </template>
