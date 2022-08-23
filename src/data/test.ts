@@ -22,10 +22,9 @@ export interface Message {
   Name?: string;
   System?: string;
   Type?: State;
-  Timestamp: number;
-  Timesvalue?: number;
+  Timestamp: string;
+  Timesvalue: number;
   Acknowledged?: boolean;
-  Deleted?: boolean;
   Content?: string;
   AutoPined?: boolean;
 }

@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-row>
+  <v-container class="content">
+    <v-row class="pink-background">
       <v-col cols="2" xs="4" class="icon-area fill-height" align-self="center">
         <v-badge icon="mdi-pin-outline" color="grey-lighten-1" v-if="pined">
           <v-icon
@@ -238,8 +238,11 @@ export default {
   /* background-color: #0f9b0f; */
 }
 .content {
-  background-color: #eef7fc;
+  /* background-color: #eef7fc; */
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
 }
+
 .btn-area {
   min-width: min-content;
   /* background-color: #9525b1; */

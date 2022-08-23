@@ -30,12 +30,12 @@
           </v-label>
 
           <v-label class="text-subtitle-2">
-            {{ message.System + ': ' + message.UnitId }}
+            {{ message.Name }}
           </v-label>
         </v-row>
         <v-row class="mt-4 mb-0" v-if="opened">
           <p class="text-body-2">
-            {{ 'Alarm: ' + message.UnitId + ' on loop 1 is activated.' }}
+            {{ message.Description }}
           </p>
         </v-row>
       </v-col>

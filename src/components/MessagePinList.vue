@@ -31,6 +31,6 @@ export default {
 <style lang="scss" scoped>
 .pined-list {
   overflow: auto;
-  padding: 0;
+  /* padding: 0; */
 }
 </style>

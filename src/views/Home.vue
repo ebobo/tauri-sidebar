@@ -122,21 +122,38 @@ export default {
 
         this.event_source.addEventListener('frakon', (event: MessageEvent) => {
           const data = JSON.parse(event.data);
+          // not alarm message
           if (data.meta.codec !== 'alarmMsg') {
             return;
           }
-          const system_message = {
-            Name: data.message.name,
-            Description: data.message.description[0].text,
-            Type: data.meta.type,
-            Timestamp: new Date(data.message.time).toLocaleString('no-NO', {
-              hour12: false,
-            }),
-            Timesvalue: data.message.time,
-            Quality: data.meta.quality,
-            Deleted: data.meta.deleted,
-          };
-          this.eventMessgaes = this.eventMessgaes.concat(system_message);
+          // delete message
+          if (data.meta.deleted) {
+            const index = this.eventMessgaes.findIndex(
+              (mes: Message) =>
+                mes.Name === data.message.name &&
+                mes.Type === data.meta.type &&
+                mes.Description === data.message.description[0].text
+            );
+            // find the message in the list
+            if (index > -1) {
+              // remove it from list
+              this.eventMessgaes.splice(index, 1);
+            }
+          } else {
+            // add new messsage
+            const system_message = {
+              Name: data.message.name,
+              Description: data.message.description[0].text,
+              Type: data.meta.type,
+              Timestamp: new Date(data.message.time).toLocaleString('no-NO', {
+                hour12: false,
+              }),
+              Timesvalue: data.message.time,
+              Quality: data.meta.quality,
+              Acknowledged: data.message.value[0].ack.state,
+            };
+            this.eventMessgaes = this.eventMessgaes.concat(system_message);
+          }
         });
 
         this.event_source.addEventListener('open', () => {
