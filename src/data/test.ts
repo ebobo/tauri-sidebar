@@ -25,6 +25,7 @@ export interface Message {
   Acknowledged: boolean;
   Content?: string;
   AutoPined?: boolean;
+  Selected?: boolean;
 }
 
 export const TestMessages: Message[] = [

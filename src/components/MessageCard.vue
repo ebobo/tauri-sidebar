@@ -1,5 +1,5 @@
 <template>
-  <v-container class="content">
+  <v-container class="content" :style="selectedStyles">
     <v-row>
       <v-col xs="4" class="icon-area" align-self="center">
         <v-badge icon="mdi-pin-outline" color="grey-lighten-1" v-if="pined">

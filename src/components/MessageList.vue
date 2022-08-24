@@ -17,6 +17,7 @@
       class="list"
       :messages="messagesOnPage"
       @pin-event="pinEvent"
+      @select-event="selectEvent"
     />
     <v-pagination
       class="pagi"
@@ -143,7 +144,6 @@ export default {
           this.filtedEventTypes.splice(index, 1);
         }
       }
-      console.log('filter', this.filtedEventTypes);
     },
     setSortingOrder(asc: boolean) {
       if (this.ascending != asc) {
