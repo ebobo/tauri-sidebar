@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="2" xs="4" class="icon-area fill-height">
+      <v-col xs="4" class="icon-area fill-height" align-self="center">
         <v-badge icon="mdi-pin-outline" color="grey-lighten-1" v-if="pined">
           <v-icon
             :color="cardParameters.mainColor"
@@ -20,26 +20,26 @@
           {{ cardParameters.mainIcon }}</v-icon
         >
       </v-col>
-      <v-col cols="8" xs="4">
+      <v-col xs="4" class="content">
         <v-row class="mt-0" align="center">
           <v-icon color="grey-darken-1" size="sm"
             >mdi-clock-time-nine-outline</v-icon
           >
-          <v-label class="ml-1 mr-2 text-subtitle-2">
+          <v-label class="ml-1 text-subtitle-2">
             {{ message.Timestamp }}
           </v-label>
 
-          <v-label class="text-subtitle-2">
+          <v-label class="ml-1 text-subtitle-2">
             {{ message.Name }}
           </v-label>
         </v-row>
-        <v-row class="mt-4 mb-0" v-if="opened">
+        <v-row class="description" v-if="opened">
           <p class="text-body-2">
             {{ message.Description }}
           </p>
         </v-row>
       </v-col>
-      <v-col cols="2" xs="4" class="btn-area" align="center">
+      <v-col xs="4" class="btn-area" align="end" align-self="center">
         <v-btn
           :variant="cardParameters.btnVariant"
           size="x-small"
@@ -60,8 +60,8 @@
     </v-row>
   </v-container>
   <v-divider
+    class="divider"
     v-if="!lastOne"
-    inset
     :color="cardParameters.dividerColor"
   ></v-divider>
 </template>
@@ -237,21 +237,30 @@ export default {
   border-left: 4px solid v-bind('cardParameters.dividerColor');
 }
 .icon-area {
-  min-width: min-content;
-  padding: 0;
-  padding-top: 10px;
-  padding-left: 10px;
+  max-width: min-content;
+
+  padding: 0.2rem;
+  margin-right: 0.5rem;
 }
 .content {
-  background-color: #eef7fc;
+  padding-top: 0.4rem;
+  padding-left: 0.4rem;
 }
 .btn-area {
-  min-width: min-content;
+  max-width: 65px;
+
   padding: 0;
-  margin-top: 5px;
-  margin-bottom: 5px;
 }
 .main-area {
   height: 50px;
+}
+
+.description {
+  margin-top: 0.8rem;
+}
+
+.divider {
+  /* background-color: pink; */
+  margin-left: 3rem;
 }
 </style>
