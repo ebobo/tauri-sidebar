@@ -76,7 +76,7 @@ export default {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
       this.sideBarScreenRatio = this.screenWidth / this.windowWidth;
-      if (this.sideBarScreenRatio > 30) {
+      if (this.windowWidth < 150) {
         this.smallSideBarOpen = true;
       } else {
         this.smallSideBarOpen = false;
