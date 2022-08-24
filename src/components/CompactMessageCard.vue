@@ -248,7 +248,6 @@ export default {
 }
 .btn-area {
   max-width: 65px;
-
   padding: 0;
 }
 .main-area {
