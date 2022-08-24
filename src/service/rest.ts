@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 const http = Axios.create({
-  baseURL: 'http://172.16.1.67:5000',
+  timeout: 30000,
 });
 
 http.interceptors.response.use(
@@ -29,10 +29,11 @@ export interface eventSelectedResponse {
 }
 
 export async function eventSelect(
-  data: eventSelectedRequest
+  data: eventSelectedRequest,
+  url: string
 ): Promise<eventSelectedResponse> {
   return http
-    .post<eventSelectedResponse>(`/object/select`, data, {
+    .post<eventSelectedResponse>(`http://${url}/object/select`, data, {
       headers: {
         'Content-Type': 'application/json',
       },

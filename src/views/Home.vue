@@ -59,7 +59,7 @@ export default {
       theme: 'light',
       eventMessgaes: [],
       event_source: null,
-      sseServerAdd: '172.16.1.67:5000/sse/feed',
+      sseServerAdd: '172.16.1.67:5000',
     };
   },
   created() {
@@ -108,7 +108,9 @@ export default {
 
     connectSSE() {
       if (this.event_source === null) {
-        this.event_source = new EventSource('http://' + this.sseServerAdd);
+        this.event_source = new EventSource(
+          'http://' + this.sseServerAdd + '/sse/feed'
+        );
         this.event_source.addEventListener('clear', (event: MessageEvent) => {
           const data = event.data;
           if (data === 'all') {

@@ -141,7 +141,7 @@ export default {
     sse_server_address: {
       required: false,
       type: String,
-      default: 'test',
+      default: '',
     },
   },
   data(): {
@@ -377,7 +377,7 @@ export default {
       const data: eventSelectedRequest = {
         tag,
       };
-      eventSelect(data)
+      eventSelect(data, this.sse_server_address)
         .then()
         .catch(() => {
           console.log('error on select');
