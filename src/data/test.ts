@@ -4,14 +4,14 @@ export enum State {
   PreAlarm = 'preAlarm',
   Alarm = 'alarm',
   AlarmAck = 'alarmAck',
-  SilentAlarm = 'SilentAlarm',
-  SmallAlarm = 'SmallAlarm',
-  LargeAlarm = 'LargeAlarm',
+  SilentAlarm = 'silentAlarm',
+  SmallAlarm = 'smallAlarm',
+  LargeAlarm = 'largeAlarm',
   Fault = 'fault',
-  FaultAck = 'FaultAck',
-  FaultOK = 'FaultOK',
-  Unknow = 'Unknow',
-  UnknowAck = 'UnknowAck',
+  FaultAck = 'faultAck',
+  FaultOK = 'faultOK',
+  Unknow = 'unknow',
+  UnknowAck = 'unknowAck',
 }
 
 export interface Message {
