@@ -76,7 +76,7 @@
           <v-icon>mdi-ship-wheel</v-icon>
         </v-row>
         <v-row justify="center">
-          <v-label class="mt-2 text-subtitle-2">-85°</v-label>
+          <v-label class="mt-2 text-subtitle-2">{{ headingAngle }}°</v-label>
         </v-row></v-col
       >
 
@@ -85,7 +85,7 @@
           <v-icon>mdi-speedometer</v-icon>
         </v-row>
         <v-row justify="center">
-          <v-label class="mt-2 text-subtitle-2">15.3 k</v-label>
+          <v-label class="mt-2 text-subtitle-2">{{ shipSpeed }} k</v-label>
         </v-row></v-col
       >
 
@@ -94,7 +94,7 @@
           <v-icon>mdi-weather-windy</v-icon>
         </v-row>
         <v-row justify="center">
-          <v-label class="mt-2 text-subtitle-2">12 m/s</v-label>
+          <v-label class="mt-2 text-subtitle-2">{{ windSpeed }} m/s</v-label>
         </v-row></v-col
       >
 
@@ -103,7 +103,7 @@
           <v-icon>mdi-windsock</v-icon>
         </v-row>
         <v-row justify="center">
-          <v-label class="mt-2 text-subtitle-2">45°</v-label>
+          <v-label class="mt-2 text-subtitle-2">{{ windAngle }}°</v-label>
         </v-row></v-col
       >
     </div>
@@ -112,13 +112,24 @@
 
 <script lang="ts">
 import ScreenInfoWidget from './ScreenInfoWidget.vue';
-import logo from `../assets/autronica_logo.png`
-import darkLogo from `../assets/autronica_logo_dark.png`
+import logo from '../assets/autronica_logo.png';
+import darkLogo from '../assets/autronica_logo_dark.png';
 import { State, Message } from '../data/test';
+
+enum Trend {
+  Increase,
+  Decrease,
+  Constant,
+}
 
 export default {
   data() {
     return {
+      shipSpeed: 15.4,
+      windSpeed: 12,
+      headingAngle: 85,
+      windAngle: 45,
+      updateInterval: null,
       test_color: 'red',
     };
   },
@@ -149,6 +160,94 @@ export default {
     changeSize() {
       this.$emit('fold');
     },
+    updateShipSpeed() {
+      let value = 0;
+      const trend = this.randomTrend();
+      if (trend === Trend.Increase) {
+        value = 0.1;
+      } else if (trend === Trend.Decrease) {
+        value = -0.1;
+      }
+
+      if (this.shipSpeed > 0.1 && this.shipSpeed < 20) {
+        this.shipSpeed = Math.floor((this.shipSpeed + value) * 10) / 10;
+      } else {
+        this.shipSpeed = 15.4;
+      }
+    },
+
+    updateHeadingAngle() {
+      let value = 0;
+      const trend = this.randomTrend();
+      if (trend === Trend.Increase) {
+        value = 1;
+      } else if (trend === Trend.Decrease) {
+        value = -1;
+      }
+      if (this.headingAngle > 1 && this.headingAngle < 360) {
+        this.headingAngle = Math.floor(this.headingAngle + value);
+      } else {
+        this.headingAngle = 85;
+      }
+    },
+
+    updateWindSpeed() {
+      let value = 0;
+      const trend = this.randomTrend();
+      if (trend === Trend.Increase) {
+        value = 1;
+      } else if (trend === Trend.Decrease) {
+        value = -1;
+      }
+      if (this.windSpeed > 1 && this.windSpeed < 20) {
+        this.windSpeed = Math.floor(this.windSpeed + value);
+      } else {
+        this.windSpeed = 12;
+      }
+    },
+
+    updateWindAngle() {
+      let value = 0;
+      const trend = this.randomTrend();
+      if (trend === Trend.Increase) {
+        value = 1;
+      } else if (trend === Trend.Decrease) {
+        value = -1;
+      }
+      if (this.windAngle > 1 && this.windAngle < 90) {
+        this.windAngle = Math.floor(this.windAngle + value);
+      } else {
+        this.windAngle = 45;
+      }
+    },
+
+    updateAllValue() {
+      this.updateHeadingAngle();
+      this.updateShipSpeed();
+      this.updateWindSpeed();
+      this.updateWindAngle();
+    },
+
+    randomTrend(): Trend {
+      //random generate number between 0 - 1
+      const rand = Math.random();
+      if (rand > 0.7) {
+        return Trend.Increase;
+      }
+      if (rand < 0.3) {
+        return Trend.Decrease;
+      }
+      return Trend.Constant;
+    },
+  },
+
+  mounted() {
+    this.updateInterval = setInterval(this.updateAllValue, 2000);
+  },
+
+  unmounted() {
+    clearInterval(this.updateInterval);
+    this.updateInterval = null;
   },
 
   computed: {
@@ -198,12 +297,14 @@ export default {
       }
       return darkLogo;
     },
+
     IconStyle() {
       if (this.main_theme === 'dark') {
         return 'background-color: #424242; height: 68px; min-width: min-content;';
       }
       return 'background-color: #eeeeee; height: 68px; min-width: min-content; ';
     },
+
     infoStyle() {
       if (this.main_theme === 'dark') {
         return 'background-color: #424242; height: 62px;';
