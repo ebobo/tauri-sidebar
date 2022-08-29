@@ -11,7 +11,7 @@ export default ({ mode }) => {
     plugins: [vue(), vuetify({ autoImport: true })],
     img: 'src',
     server: {
-      port: process.env.VITE_SERVE_PORT,
+      port: parseInt(process.env.VITE_SERVE_PORT),
       strictPort: true,
     },
   });

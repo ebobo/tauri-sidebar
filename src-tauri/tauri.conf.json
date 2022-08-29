@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "tauri-sidebar",
-    "version": "0.1.5"
+    "version": "0.1.6"
   },
   "tauri": {
     "allowlist": {
@@ -59,7 +59,7 @@
         "height": 1080,
         "resizable": true,
         "title": "sidebar",
-        "width": 420,
+        "width": 440,
         "decorations": true,
         "minWidth": 68,
         "minHeight": 800
