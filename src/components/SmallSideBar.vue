@@ -25,10 +25,14 @@
         <v-btn class="text-subtitle-2" variant="flat" icon>Operate</v-btn>
       </v-row>
       <v-row class="mt-5 mb-5" align="center" justify="center">
-        <v-btn class="text-subtitle-2" icon flat>Reset</v-btn>
+        <v-btn class="text-subtitle-2" icon flat @click="sendReset"
+          >Reset</v-btn
+        >
       </v-row>
       <v-row class="mt-5 mb-5" align="center" justify="center">
-        <v-btn class="text-subtitle-2" icon flat>Ack</v-btn>
+        <v-btn class="text-subtitle-2" icon flat @click="sendAcknowledge"
+          >Ack</v-btn
+        >
       </v-row>
     </div>
     <div class="icons">
@@ -115,6 +119,7 @@ import ScreenInfoWidget from './ScreenInfoWidget.vue';
 import logo from '../assets/autronica_logo.png';
 import darkLogo from '../assets/autronica_logo_dark.png';
 import { State, Message } from '../data/test';
+import { sendCommand, commandRequest, commandResponse } from '../service/rest';
 
 enum Trend {
   Increase,
@@ -152,6 +157,11 @@ export default {
       type: Array as () => Message[],
       default: [],
     },
+    sse_server_address: {
+      required: false,
+      type: String,
+      default: '',
+    },
   },
   methods: {
     changeTheme() {
@@ -159,6 +169,30 @@ export default {
     },
     changeSize() {
       this.$emit('fold');
+    },
+    sendReset() {
+      const data: commandRequest = {
+        type: 'reset',
+      };
+      sendCommand(data, this.sse_server_address)
+        .then((response: commandResponse) =>
+          console.log('response from server: ' + JSON.stringify(response))
+        )
+        .catch(() => {
+          console.log('error on reset');
+        });
+    },
+    sendAcknowledge() {
+      const data: commandRequest = {
+        type: 'acknowledge',
+      };
+      sendCommand(data, this.sse_server_address)
+        .then((response: commandResponse) =>
+          console.log('response from server: ' + JSON.stringify(response))
+        )
+        .catch(() => {
+          console.log('error on acknowledge');
+        });
     },
     updateShipSpeed() {
       let value = 0;

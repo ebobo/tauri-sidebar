@@ -21,6 +21,7 @@
       :messages="eventMessgaes"
       :main_theme="theme"
       :bar_ratio="sideBarScreenRatio"
+      :sse_server_address="sseServerAdd"
       @fold="switchBars"
       @change-theme="changeTheme"
     />
@@ -76,7 +77,7 @@ export default {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
       this.sideBarScreenRatio = this.screenWidth / this.windowWidth;
-      if (this.windowWidth < 155) {
+      if (this.windowWidth <= 155) {
         this.smallSideBarOpen = true;
       } else {
         this.smallSideBarOpen = false;

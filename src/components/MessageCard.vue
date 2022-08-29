@@ -105,18 +105,8 @@ export default {
   methods: {
     //temp code
     acknowledge() {
-      if (this.message.Type === State.Alarm) {
-        this.message.Type = State.AlarmAck;
-      } else if (this.message.Type === State.Fault) {
-        this.message.Type = State.FaultAck;
-      } else if (this.message.Type === State.Unknow) {
-        this.message.Type = State.UnknowAck;
-      } else if (this.message.Type === State.AlarmAck) {
-        this.message.Type = State.Alarm;
-      } else if (this.message.Type === State.FaultAck) {
-        this.message.Type = State.Fault;
-      } else if (this.message.Type === State.UnknowAck) {
-        this.message.Type = State.Unknow;
+      if (!this.message.Acknowledged) {
+        this.message.Acknowledged = true;
       }
     },
     pinEvent() {
@@ -172,6 +162,9 @@ export default {
         btnVariant: 'flat',
         dividerColor: 'grey-lighten-1',
       };
+      if (this.message.Acknowledged) {
+        para.ackIcon = 'mdi-account-check-outline';
+      }
       switch (this.message.Type) {
         case State.SilentAlarm: {
           para.mainIcon = 'mdi-alert';
@@ -188,32 +181,23 @@ export default {
         case State.Alarm: {
           para.mainIcon = 'mdi-alert';
           para.mainColor = 'red-darken-2';
-          para.btnVariant = 'flat';
           // para.dividerColor = 'red-darken-2';
           break;
         }
         case State.AlarmAck: {
           para.mainIcon = 'mdi-alert';
           para.mainColor = 'red-darken-2';
-          para.btnVariant = 'flat';
-          para.ackIcon = 'mdi-account-check-outline';
           break;
         }
         case State.Fault: {
           para.mainIcon = 'mdi-alert';
           para.mainColor = 'yellow-darken-3';
-          para.btnVariant = 'flat';
           // para.dividerColor = 'yellow-darken-3';
           break;
         }
         case State.FaultAck: {
           para.mainIcon = 'mdi-alert';
           para.mainColor = 'yellow-darken-3';
-          para.ackIcon = 'mdi-account-check-outline';
-          break;
-        }
-        case State.UnknowAck: {
-          para.ackIcon = 'mdi-account-check-outline';
           break;
         }
         case State.EarlyWarning: {

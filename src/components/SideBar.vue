@@ -8,7 +8,11 @@
         @change-settings="showSettings"
         @screen-info="showScreenInfo"
       />
-      <buttons-widget @search-item="setSearchKeyword" />
+      <buttons-widget
+        @search-item="setSearchKeyword"
+        @reset="resetCommand"
+        @acknowledge="acknowledgeCommand"
+      />
       <message-pin-list
         v-if="enablePin && pinedEventsList.length > 0"
         :pinedMessages="pinedEventsList"
@@ -85,8 +89,10 @@ import SettingWidget from './SettingWidget.vue';
 import ChipWidget from './ChipWidget.vue';
 import {
   eventSelect,
+  sendCommand,
+  commandRequest,
   eventSelectedRequest,
-  eventSelectedResponse,
+  commandResponse,
 } from '../service/rest';
 
 export default {
@@ -182,7 +188,7 @@ export default {
         this.pinedEventsList = [];
         return;
       }
-      // event list not empty
+      // pined event list not empty
       if (this.pinedEventsList.length > 0) {
         const removeList: Message[] = [];
         this.pinedEventsList.forEach((m: Message, i: number) => {
@@ -190,8 +196,7 @@ export default {
             removeList.push(m);
           } else {
             const index = newList.findIndex(
-              (event: Message) =>
-                event.UnitId === m.UnitId && event.Type === m.Type
+              (event: Message) => event.Key === m.Key
             );
             // can not find this message in new message list add to remove list
             if (index === -1) {
@@ -381,6 +386,32 @@ export default {
         .then()
         .catch(() => {
           console.log('error on select');
+        });
+    },
+
+    resetCommand() {
+      const data: commandRequest = {
+        type: 'reset',
+      };
+      sendCommand(data, this.sse_server_address)
+        .then((response: commandResponse) =>
+          console.log('response from server: ' + JSON.stringify(response))
+        )
+        .catch(() => {
+          console.log('error on reset');
+        });
+    },
+
+    acknowledgeCommand() {
+      const data: commandRequest = {
+        type: 'acknowledge',
+      };
+      sendCommand(data, this.sse_server_address)
+        .then((response: commandResponse) =>
+          console.log('response from server: ' + JSON.stringify(response))
+        )
+        .catch(() => {
+          console.log('error on acknowledge');
         });
     },
   },
