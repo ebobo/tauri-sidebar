@@ -49,6 +49,7 @@
         :height="height"
         :debug_message="debugMessage"
       />
+      <video-widget v-if="enableCCTVcam" class="video-widget" />
       <bottom-info class="bottom-widget" />
     </v-card>
 
@@ -61,6 +62,7 @@
       :enable_pin="enablePin"
       :enable_auto_pin="enableAutoPin"
       :enable_split="enableSplit"
+      :enable_cctv="enableCCTVcam"
       :auto_pin_alarm="autoPinAlarm"
       :message_sorting="messageSorting"
       :server_address="sse_server_address"
@@ -72,6 +74,7 @@
       @enable-split-window="enableSplitWindow"
       @enable-auto-pin-alarm="enableAutoPinAlarm"
       @sse-server-address="setSseServerAddress"
+      @enable-cctv="enableCCTV"
     />
   </div>
 </template>
@@ -87,6 +90,7 @@ import ButtonsWidget from './ButtonsWidget.vue';
 import BottomInfo from './BottomInfo.vue';
 import SettingWidget from './SettingWidget.vue';
 import ChipWidget from './ChipWidget.vue';
+import VideoWidget from './VideoWidget.vue';
 import {
   eventSelect,
   sendCommand,
@@ -107,6 +111,7 @@ export default {
     BottomInfo,
     SettingWidget,
     ChipWidget,
+    VideoWidget,
   },
   props: {
     width: {
@@ -159,6 +164,7 @@ export default {
     pinedEventsList: Message[];
     enablePin: boolean;
     enableAutoPin: boolean;
+    enableCCTVcam: boolean;
     AutoPinAlarm: boolean;
     enableSplit: boolean;
     messageSorting: string;
@@ -174,6 +180,7 @@ export default {
       pinedEventsList: [],
       enablePin: false,
       enableAutoPin: false,
+      enableCCTVcam: false,
       AutoPinAlarm: false,
       enableSplit: false,
       messageSorting: 'timestamp',
@@ -362,6 +369,12 @@ export default {
       }
     },
 
+    enableCCTV(enable: boolean) {
+      if (this.enableCCTVcam != enable) {
+        this.enableCCTVcam = enable;
+      }
+    },
+
     setDebugMessage(m: string) {
       if (this.debugMessage != m) {
         this.debugMessage = m;
@@ -435,6 +448,10 @@ export default {
 
 .bottom-widget {
   flex: 0 1 55px;
+}
+
+.video-widget {
+  flex: 0 1 320px;
 }
 
 .info-widget {

@@ -111,6 +111,18 @@
     </div>
     <v-divider></v-divider>
 
+    <!-- CCTV -->
+    <v-label class="subtitle-tight">CCTV</v-label>
+    <v-switch
+      class="center-switch"
+      v-model="enable_cctv"
+      color="#1E88E5"
+      hide-details
+      inset
+      :label="`${enable_cctv ? 'on' : 'off'}`"
+    ></v-switch>
+    <v-divider></v-divider>
+
     <!-- Server Address -->
     <v-label class="subtitle-tight">Server address</v-label>
     <div class="sub-row-column">
@@ -171,6 +183,10 @@ export default {
       required: true,
       type: Boolean,
     },
+    enable_cctv: {
+      required: false,
+      type: Boolean,
+    },
     events_per_window: {
       required: true,
       type: Number,
@@ -196,6 +212,9 @@ export default {
     },
     enable_split(newValue: boolean) {
       this.$emit('enable-split-window', newValue);
+    },
+    enable_cctv(newValue: boolean) {
+      this.$emit('enable-cctv', newValue);
     },
   },
   methods: {
