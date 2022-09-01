@@ -1,12 +1,32 @@
 <template>
-  <v-row class="info-row"><v-label>CCTV Camera 1-2</v-label></v-row>
+  <v-row class="info-row"><v-label>CCTV Camera strame</v-label></v-row>
   <v-row class="video-row" dense>
     <video muted loop autoplay controls class="video">
-      <source src="../assets/autroguard.mp4" type="video/mp4" />
+      <source
+        src="https://www.w3schools.com/html/mov_bbb.mp4 "
+        type="video/mp4"
+      />
       Your browser does not support the video tag.
     </video>
   </v-row>
 </template>
+
+<!-- <script lang="ts">
+import { appDir, join } from '@tauri-apps/api/path';
+import { convertFileSrc } from '@tauri-apps/api/tauri';
+const appDirPath = await appDir();
+const filePath = await join(appDirPath, 'assets/autroguard.mp4');
+const assetUrl = convertFileSrc(filePath);
+export default {
+  data(): {
+    fileURL: string;
+  } {
+    return {
+      fileURL: assetUrl,
+    };
+  },
+};
+</script> -->
 
 <style lang="scss" scoped>
 .info-row {

@@ -25,8 +25,8 @@
 </template>
 
 <script lang="ts">
-import logo from `../assets/autronica_logo.png`
-import darkLogo from `../assets/autronica_logo_dark.png`
+import logo from '../assets/autronica_logo.png';
+import darkLogo from '../assets/autronica_logo_dark.png';
 
 export default {
   emits: ['change-theme', 'change-size', 'change-settings', 'screen-info'],

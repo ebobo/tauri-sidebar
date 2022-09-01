@@ -8,11 +8,15 @@
   },
   "package": {
     "productName": "tauri-sidebar",
-    "version": "0.1.7"
+    "version": "0.1.9"
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "protocol": {
+        "asset": true,
+        "assetScope": ["**"]
+      }
     },
     "bundle": {
       "active": true,
