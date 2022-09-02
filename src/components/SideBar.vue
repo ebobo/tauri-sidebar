@@ -49,7 +49,11 @@
         :height="height"
         :debug_message="debugMessage"
       />
-      <video-widget v-if="enableCCTVcam" class="video-widget" />
+      <video-widget
+        v-if="enableCCTVcam"
+        class="video-widget"
+        :video_address="cctvAddress"
+      />
       <bottom-info class="bottom-widget" />
     </v-card>
 
@@ -66,6 +70,7 @@
       :auto_pin_alarm="autoPinAlarm"
       :message_sorting="messageSorting"
       :server_address="sse_server_address"
+      :cctv_address="cctvAddress"
       @close-settings="dispSettings = false"
       @events-per-page="setEventsPerPage"
       @events-per-window="setEventsPerWindow"
@@ -170,6 +175,7 @@ export default {
     messageSorting: string;
     debugMessage: string;
     searchKeyword: string;
+    cctvAddress: string;
   } {
     return {
       dispScreenInfo: false,
@@ -186,6 +192,7 @@ export default {
       messageSorting: 'timestamp',
       debugMessage: '',
       searchKeyword: '',
+      cctvAddress: 'https://www.w3schools.com/html/mov_bbb.mp4',
     };
   },
   watch: {
@@ -369,7 +376,11 @@ export default {
       }
     },
 
-    enableCCTV(enable: boolean) {
+    enableCCTV(enable: boolean, address: string) {
+      //check if there is a new address for cctv
+      if (address !== '' && this.cctvAddress != address) {
+        this.cctvAddress = address;
+      }
       if (this.enableCCTVcam != enable) {
         this.enableCCTVcam = enable;
       }

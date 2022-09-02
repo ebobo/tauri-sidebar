@@ -113,14 +113,22 @@
 
     <!-- CCTV -->
     <v-label class="subtitle-tight">CCTV</v-label>
-    <v-switch
-      class="center-switch"
-      v-model="enable_cctv"
-      color="#1E88E5"
-      hide-details
-      inset
-      :label="`${enable_cctv ? 'on' : 'off'}`"
-    ></v-switch>
+    <div class="sub-row-column">
+      <v-switch
+        class="center-switch"
+        v-model="enable_cctv"
+        color="#1E88E5"
+        hide-details
+        inset
+        :label="`${enable_cctv ? 'on' : 'off'}`"
+      ></v-switch>
+      <v-text-field
+        class="ip-editor"
+        v-model="cctv_address"
+        variant="underlined"
+        color="#82b1ff"
+      ></v-text-field>
+    </div>
     <v-divider></v-divider>
 
     <!-- Server Address -->
@@ -129,7 +137,6 @@
       <v-text-field
         class="ip-editor"
         v-model="server_address"
-        :rules="rules"
         variant="underlined"
         color="#82b1ff"
       ></v-text-field>
@@ -199,6 +206,10 @@ export default {
       required: true,
       type: String,
     },
+    cctv_address: {
+      required: true,
+      type: String,
+    },
   },
   watch: {
     enable_pin(newValue: boolean) {
@@ -214,7 +225,7 @@ export default {
       this.$emit('enable-split-window', newValue);
     },
     enable_cctv(newValue: boolean) {
-      this.$emit('enable-cctv', newValue);
+      this.$emit('enable-cctv', newValue, this.cctv_address);
     },
   },
   methods: {
@@ -259,7 +270,7 @@ export default {
   right: 0;
   top: 0;
   bottom: 0;
-  width: 250px;
+  width: 260px;
   z-index: 1000;
 }
 .title {
@@ -327,7 +338,7 @@ export default {
 }
 
 .ip-editor {
-  width: 210px;
+  width: 220px;
   height: 60px;
 }
 
@@ -336,9 +347,5 @@ export default {
 }
 .btn-single {
   width: 120px;
-}
-
-.pink-background {
-  background-color: pink;
 }
 </style>
