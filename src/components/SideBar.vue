@@ -192,7 +192,7 @@ export default {
       messageSorting: 'timestamp',
       debugMessage: '',
       searchKeyword: '',
-      cctvAddress: 'https://www.w3schools.com/html/mov_bbb.mp4',
+      cctvAddress: 'http://localhost/media/movie1.mp4',
     };
   },
   watch: {

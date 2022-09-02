@@ -60,7 +60,7 @@ export default {
       theme: 'light',
       eventMessgaes: [],
       event_source: null,
-      sseServerAdd: '172.16.1.67:5000',
+      sseServerAdd: 'localhost:5000',
     };
   },
   created() {
