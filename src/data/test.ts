@@ -14,6 +14,13 @@ export enum State {
   UnknowAck = 'unknowAck',
 }
 
+export interface AppSettings {
+  EventsPerPage: number;
+  ServerAddress: string;
+  MonitorAddress: string;
+  Theme: string;
+}
+
 export interface Message {
   Key: string;
   Tag: string;

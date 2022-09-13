@@ -16,6 +16,18 @@
       "protocol": {
         "asset": true,
         "assetScope": ["**"]
+      },
+      "fs": {
+        "all": true,
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "copyFile": true,
+        "createDir": true,
+        "removeDir": true,
+        "removeFile": true,
+        "renameFile": true,
+        "scope": ["$APP/*"]
       }
     },
     "bundle": {
@@ -33,7 +45,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.autronica.sidebar",
+      "identifier": "autronica-sidebar",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

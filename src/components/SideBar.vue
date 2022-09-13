@@ -52,7 +52,7 @@
       <video-widget
         v-if="enableCCTVcam"
         class="video-widget"
-        :video_address="cctvAddress"
+        :video_address="cctv_stream_address"
       />
       <bottom-info class="bottom-widget" />
     </v-card>
@@ -70,7 +70,7 @@
       :auto_pin_alarm="autoPinAlarm"
       :message_sorting="messageSorting"
       :server_address="sse_server_address"
-      :cctv_address="cctvAddress"
+      :cctv_address="cctv_stream_address"
       @close-settings="dispSettings = false"
       @events-per-page="setEventsPerPage"
       @events-per-window="setEventsPerWindow"
@@ -78,8 +78,8 @@
       @enable-auto-pin="enableAutoPinMessage"
       @enable-split-window="enableSplitWindow"
       @enable-auto-pin-alarm="enableAutoPinAlarm"
-      @sse-server-address="setSseServerAddress"
       @enable-cctv="enableCCTV"
+      @sse-server-address="setSseServerAddress"
     />
   </div>
 </template>
@@ -159,6 +159,11 @@ export default {
       type: String,
       default: '',
     },
+    cctv_stream_address: {
+      required: false,
+      type: String,
+      default: '',
+    },
   },
   data(): {
     dispScreenInfo: boolean;
@@ -175,7 +180,6 @@ export default {
     messageSorting: string;
     debugMessage: string;
     searchKeyword: string;
-    cctvAddress: string;
   } {
     return {
       dispScreenInfo: false,
@@ -192,7 +196,6 @@ export default {
       messageSorting: 'timestamp',
       debugMessage: '',
       searchKeyword: '',
-      cctvAddress: 'http://localhost/media/movie1.mp4',
     };
   },
   watch: {
@@ -378,8 +381,8 @@ export default {
 
     enableCCTV(enable: boolean, address: string) {
       //check if there is a new address for cctv
-      if (address !== '' && this.cctvAddress != address) {
-        this.cctvAddress = address;
+      if (address !== '' && this.cctv_stream_address != address) {
+        this.$emit('change-cctv-address', address);
       }
       if (this.enableCCTVcam != enable) {
         this.enableCCTVcam = enable;
